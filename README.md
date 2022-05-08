@@ -1,8 +1,6 @@
 # BaseXX
 
-[![Go Reference](https://pkg.go.dev/badge/github.com/teal-finance/BaseXX.svg "Go documentation for BaseXX")](https://pkg.go.dev/github.com/teal-finance/BaseXX)
-
-Go modules:
+Go modules: &emsp; &emsp; &emsp; &emsp; &emsp; [![Go Reference](https://pkg.go.dev/badge/github.com/teal-finance/BaseXX.svg "Go documentation for BaseXX")](https://pkg.go.dev/github.com/teal-finance/BaseXX)
 
 [`import "github.com/teal-finance/BaseXX/base58"`](./base58/)  
 [`import "github.com/teal-finance/BaseXX/base62"`](./base62/)  
@@ -181,12 +179,12 @@ ok      github.com/teal-finance/BaseXX/xascii85 0.002s
 
 If you have some suggestions, or need a new feature,
 please contact us, using the
-[issue tracking](https://github.com/teal-finance/diophantine/issues),
+[issue tracking](https://github.com/teal-finance/BaseXX/issues),
 or at Teal.Finance[à]pm.me or
 [@TealFinance](https://twitter.com/TealFinance).
 
 Feel free to propose a
-[Pull Request](https://github.com/teal-finance/diophantine/pulls),
+[Pull Request](https://github.com/teal-finance/BaseXX/pulls),
 your contributions are welcome. :wink:
 
 ## See also
