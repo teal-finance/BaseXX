@@ -1,0 +1,4 @@
+github.com/mr-tron/base58 v1.2.0 h1:T/HDJBh4ZCPbU39/+c3rRvE0uKBQlU27+QI8LJ4t64o=
+github.com/mr-tron/base58 v1.2.0/go.mod h1:BinMc/sQntlIE1frQmRFPUoPA1Zkr8VRgBdjWI2mNwc=
+github.com/unix-world/smartgo v0.0.0-20220422190424-359fb51071e3 h1:uEC4FvoR84YEjacHaEpJUM/3+2T6QKJHVjPHoVhbVYY=
+github.com/unix-world/smartgo v0.0.0-20220422190424-359fb51071e3/go.mod h1:JvTC0uo166o12dDx1uHWuT77+tUA+ldS+mlqALwm5Ak=

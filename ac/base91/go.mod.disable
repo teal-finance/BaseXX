@@ -1,0 +1,3 @@
+module catinello.eu/base91
+
+go 1.16

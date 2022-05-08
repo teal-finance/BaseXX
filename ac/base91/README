@@ -1,0 +1,9 @@
+$ go test --bench . --benchmem . catinello.eu/base91
+goos: linux
+goarch: amd64
+pkg: catinello.eu/base91
+cpu: Intel(R) Core(TM) i5-4250U CPU @ 1.30GHz
+BenchmarkEncode 	     200	   5907345 ns/op	 7378944 B/op	      36 allocs/op
+BenchmarkDecode 	     218	   5493955 ns/op	 5863424 B/op	      35 allocs/op
+PASS
+ok  	catinello.eu/base91	3.657s
