@@ -13,12 +13,16 @@
 Package base91 is a pretty good Base91 encoder
 with customizable encoding alphabet.
 
+Encoding alphabet
+
 This package base91 provides a standard alphabet
 complying with the constraints of the cookie tokens:
 contains the characters from 0x21 (!) to 0x7E (~)
 except " ; and \. This is similar to the base92
 standard alphabet, but without the space character (Ox20).
 You can also provide your own customized alphabet.
+
+Slower than codeberg.org/ac/base91
 
 For a faster Base91 encoder, you may prefer:
 <https://github.com/teal-finance/BaseXX/ac/base91>
@@ -28,31 +32,15 @@ The latter cannot be used because the module name
 However this Base91 encoder does not allow to change
 its specific different alphabet.
 
-Base91 Usage
+Comparison
 
-To encode any binary data to a Base91 string:
+Characters often used by common BaseXX encodings:
 
-	import "github.com/teal-finance/BaseXX/base91"
+	Base91  0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+/=!#$%&'()*,-.:<>?@[]^_`{|}~
+	Base64  0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+/=
+	Base62  0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
+	Base58   123456789ABCDEFGH JKLMN PQRSTUVWXYZabcdefghijk mnopqrstuvwxyz
+	Hexa    0123456789ABCDEF
 
-	func foo() {
-		bin := []byte{12, 23, 24, 45, 56, 67, 78, 89}
-		str := base91.Encode(bin)
-	}
-
-To decode back the encoded Base91 string:
-
-		bin, err := base91.Decode(str)
-
-With custom alphabet
-
-	var myAlphabet = base91.NewAlphabet(
-		"PQRSTUVWXYZ[]^_`abcdefghijklmnopqrstuvwxyz{|}~" +
-		"!#$%&'()*+,-./0123456789:<=>?@ABCDEFGHIJKLMNO")
-
-	func bar(bin []byte) ([]byte, error) {
-		str := base91.EncodeAlphabet(bin, myAlphabet)
-		bin, err := base91.DecodeAlphabet(str, myAlphabet)
-		return bin, err
-	}
 */
 package base91

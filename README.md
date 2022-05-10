@@ -9,6 +9,17 @@ Go modules: &emsp; &emsp; &emsp; &emsp; &emsp; [![Go Reference](https://pkg.go.d
 [`import "github.com/teal-finance/BaseXX/xascii85"`](./xascii85/)  
 [`import "github.com/teal-finance/BaseXX/ac/base91"`](./ac/base91/)
 
+Characters often used by common BaseXX encodings:
+
+```
+Hexa    0123456789ABCDEF
+Base58   123456789ABCDEFGH JKLMN PQRSTUVWXYZabcdefghijk mnopqrstuvwxyz
+Base62  0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
+Base64  0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+/=
+Base91  0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+/=*-_~.,?!@#$%&()[]{|}<>^:`'
+Base92  0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+/=*-_~.,?!@#$%&()[]{|}<>^:`'"
+```
+
 ## Fork of mr-tron/base58
 
 Originally, BaseXX is a fork of <https://github.com/mr-tron/base58>
@@ -24,6 +35,17 @@ code copied from <https://github.com/mr-tron/base58>:
 All these previous BaseXX encoders
 support customized encoding alphabet
 without any performance tradeoff.
+
+## Ascii85 convenient abstraction
+
+This repo also ships the [Ascii85](./xascii85/),
+a layer on top of the `"encoding/ascii85"`
+standard library to provide the same function signature:
+
+```go
+func Encode(bin []byte) string
+func Decode(str string) ([]byte, error)
+```
 
 ## Faster than unix-world/smartgo
 
@@ -42,22 +64,11 @@ The main interest of BaseXX compared to
 is the performance: BaseXX is five times faster.
 See the [benchmark results](#benchmark).
 
-## Ascii85 convenient abstraction
+## Slower than Base91 by Antonino Catinello
 
-This repo also ships the [Ascii85](./xascii85/)
-that is just a layer on top of the "encoding/ascii85"
-standard library providing the same function signature:
-
-```go
-func Encode(bin []byte) string
-func Decode(str string) ([]byte, error)
-```
-
-## Even faster Base91 by Antonino Catinello
-
-Moreover, this repo contains a
+This repo contains a
 [copy](<https://github.com/teal-finance/BaseXX/ac/base91>)
-of <https://codeberg.org/ac/base91>.
+(almost unmodified) of <https://codeberg.org/ac/base91>.
 The latter cannot be used because the module name
 `"catinello.eu/base91"` is not reachable (tested in May 2022).
 
