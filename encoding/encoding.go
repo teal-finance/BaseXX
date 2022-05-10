@@ -13,46 +13,49 @@
 // or online at <https://opensource.org/licenses/MIT>.
 // #endregion </editor-fold>
 
-// Package helper provides common functions for the packages
+// Package encoding provides common functions for the packages
 // at "github.com/teal-finance/garcon/basexx".
-package helper
+package encoding
 
 import (
 	"log"
 	"math"
 )
 
-// Alphabet is an optimized form of the encoding characters.
-type Alphabet struct {
-	Decode [128]int8
-	Encode []byte
+// Encoding alphabet is an optimized form of the encoding characters.
+type Encoding struct {
+	EncChars []byte
+	DecMap   [128]int8
 }
 
-// NewAlphabet creates a new alphabet.
+// NewEncoding creates a new alphabet mapping.
 //
-// It panics if the passed string is not 92 bytes long, isn't valid ASCII,
-// or does not contain 92 distinct characters.
-func NewAlphabet(s string, base int) *Alphabet {
-	if len(s) != base {
-		log.Panicf("Base%d: alphabet must be %d long, but got %d characters", base, base, len(s))
+// It panics if the passed string does not meet all requirements:
+// its length (in bytes) must be the same as the base,
+// all runes must be valid ASCII characters,
+// and all characters must be different.
+// Encoder string with non-printable characters are accepted.
+func NewEncoding(encoder string, base int) *Encoding {
+	if len(encoder) != base {
+		log.Panicf("Base%d: alphabet must be %d long, but got %d characters", base, base, len(encoder))
 	}
 
-	ret := new(Alphabet)
-	ret.Encode = []byte(s)
-	if len(ret.Encode) != base {
-		log.Panicf("Base%d: alphabet must be %d bytes long, but got %d bytes", base, base, len(ret.Encode))
+	ret := new(Encoding)
+	ret.EncChars = []byte(encoder)
+	if len(ret.EncChars) != base {
+		log.Panicf("Base%d: alphabet must be %d bytes long, but got %d bytes", base, base, len(ret.EncChars))
 	}
 
-	for i := range ret.Decode {
-		ret.Decode[i] = -1
+	for i := range ret.DecMap {
+		ret.DecMap[i] = -1
 	}
 
 	distinct := 0
-	for i, b := range ret.Encode {
-		if ret.Decode[b] == -1 {
+	for i, b := range ret.EncChars {
+		if ret.DecMap[b] == -1 {
 			distinct++
 		}
-		ret.Decode[b] = int8(i)
+		ret.DecMap[b] = int8(i)
 	}
 
 	if distinct != base {

@@ -17,10 +17,10 @@ import (
 )
 
 // Encode any binary data to a Base92 string
-func ExampleEncode() {
+func ExampleEncoding_Encode() {
 	bin := []byte{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 255}
 
-	str := base92.Encode(bin)
+	str := base92.StdEncoding.EncodeToString(bin)
 
 	fmt.Println("Binary input: ", bin)
 	fmt.Println("Base92 string:", str)
@@ -30,8 +30,8 @@ func ExampleEncode() {
 }
 
 // Decode back the encoded Base92 string
-func ExampleDecode() {
-	bin, err := base92.Decode("!2V2aO7r^-Kf")
+func ExampleEncoding_DecodeString() {
+	bin, err := base92.StdEncoding.DecodeString("!2V2aO7r^-Kf")
 
 	fmt.Println("Binary:", bin)
 	fmt.Println("Error: ", err)
@@ -41,16 +41,15 @@ func ExampleDecode() {
 }
 
 // With custom alphabet
-
-func ExampleEncodeAlphabet() {
-	var noSingleDoubleQuotes = base92.NewAlphabet("" +
+func ExampleEncoding_EncodeToString() {
+	var noSingleDoubleQuotes = base92.NewEncoding("" +
 		"abcdefghijklmnopqrstuvwxyz[]^_`!@#$%&()*+-<=> " +
 		"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/{|}~.,:;?")
 
 	bin := []byte{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 255}
 
-	str := base92.EncodeAlphabet(bin, noSingleDoubleQuotes)
-	bin, err := base92.DecodeAlphabet(str, noSingleDoubleQuotes)
+	str := noSingleDoubleQuotes.EncodeToString(bin)
+	bin, err := noSingleDoubleQuotes.DecodeString(str)
 
 	fmt.Println("Binary:", bin)
 	fmt.Println("Base92:", str)

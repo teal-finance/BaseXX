@@ -37,7 +37,7 @@ var cases = []struct {
 func TestEncode(t *testing.T) {
 	for _, c := range cases {
 		t.Run(c.name, func(t *testing.T) {
-			str := Encode(c.bin)
+			str := StdEncoding.EncodeToString(c.bin)
 
 			ni := len(c.bin)
 			if ni > 70 {
@@ -50,7 +50,7 @@ func TestEncode(t *testing.T) {
 			t.Logf("bin len=%d [:%d]=%v", len(c.bin), ni, c.bin[:ni])
 			t.Logf("str len=%d [:%d]=%q", len(str), na, str[:na])
 
-			got, err := Decode(str)
+			got, err := StdEncoding.DecodeString(str)
 			if err != nil {
 				t.Errorf("Decode() error = %v", err)
 				return

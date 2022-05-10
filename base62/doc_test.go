@@ -17,10 +17,10 @@ import (
 )
 
 // Encode any binary data to a Base62 string
-func ExampleEncode() {
+func ExampleEncoding_Encode() {
 	bin := []byte{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 255}
 
-	str := base62.Encode(bin)
+	str := base62.StdEncoding.EncodeToString(bin)
 
 	fmt.Println("Binary input: ", bin)
 	fmt.Println("Base62 string:", str)
@@ -30,8 +30,8 @@ func ExampleEncode() {
 }
 
 // Decode back the encoded Base62 string
-func ExampleDecode() {
-	bin, err := base62.Decode("01TSm0PiyImxMV")
+func ExampleEncoding_DecodeString() {
+	bin, err := base62.StdEncoding.DecodeString("01TSm0PiyImxMV")
 
 	fmt.Println("Binary:", bin)
 	fmt.Println("Error: ", err)
@@ -41,15 +41,14 @@ func ExampleDecode() {
 }
 
 // With custom alphabet
-
-func ExampleEncodeAlphabet() {
-	var myAlphabet = base62.NewAlphabet(
+func ExampleEncoding_EncodeToString() {
+	var myEncoding = base62.NewEncoding(
 		"0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
 
 	bin := []byte{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 254, 255}
 
-	str := base62.EncodeAlphabet(bin, myAlphabet)
-	bin, err := base62.DecodeAlphabet(str, myAlphabet)
+	str := myEncoding.EncodeToString(bin)
+	bin, err := myEncoding.DecodeString(str)
 
 	fmt.Println("Binary:", bin)
 	fmt.Println("Base62:", str)

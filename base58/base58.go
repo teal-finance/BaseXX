@@ -18,42 +18,43 @@ package base58
 import (
 	"fmt"
 
-	"github.com/teal-finance/BaseXX/helper"
+	"github.com/teal-finance/BaseXX/encoding"
 )
 
 const (
 	Base = 58
 	// approximation of ceil(log(256)/log(base)).
 	numerator   = 11
-	denominator = 8 // power of two -> speed up EncodeAlphabet()
+	denominator = 8 // power of two -> speed up EncodeEncoding()
 )
 
-// StdAlphabet is the default encoding alphabet, same as BTCAlphabet.
-var StdAlphabet = BTCAlphabet
+// StdEncoding is the default encoding alphabet, same as BTCEncoding.
+var StdEncoding = BTCEncoding
 
-// BTCAlphabet is the Bitcoin Base58 alphabet.
-var BTCAlphabet = NewAlphabet("123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz")
+// BTCEncoding is the Bitcoin Base58 enc.
+var BTCEncoding = NewEncoding("123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz")
 
-// FlickrAlphabet is the Flickr Base58 alphabet.
-var FlickrAlphabet = NewAlphabet("123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ")
+// FlickrEncoding is the Flickr Base58 enc.
+var FlickrEncoding = NewEncoding("123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ")
 
 func init() {
-	helper.PanicIfBadApproximation(Base, numerator, denominator)
+	encoding.PanicIfBadApproximation(Base, numerator, denominator)
 }
 
-func NewAlphabet(s string) *helper.Alphabet {
-	return helper.NewAlphabet(s, Base)
+type Encoding encoding.Encoding
+
+func NewEncoding(encoder string) *Encoding {
+	e := encoding.NewEncoding(encoder, Base)
+	return (*Encoding)(e)
 }
 
-// Encode encodes binary bytes into a Base58 string
-// using the default alphabet.
-func Encode(bin []byte) string {
-	return EncodeAlphabet(bin, StdAlphabet)
+// EncodeToString encodes binary bytes into Base58 bytes.
+func (enc *Encoding) EncodeToString(bin []byte) string {
+	return string(enc.Encode(bin))
 }
 
-// EncodeAlphabet encodes binary bytes into a Base58 string
-// using the given alphabet.
-func EncodeAlphabet(bin []byte, alphabet *helper.Alphabet) string {
+// EncodeToString encodes binary bytes into a Base58 string.
+func (enc *Encoding) Encode(bin []byte) []byte {
 	size := len(bin)
 
 	zcount := 0
@@ -92,26 +93,19 @@ func EncodeAlphabet(bin []byte, alphabet *helper.Alphabet) string {
 	val := out[i-zcount:]
 	size = len(val)
 	for i = 0; i < size; i++ {
-		out[i] = alphabet.Encode[val[i]]
+		out[i] = enc.EncChars[val[i]]
 	}
 
-	return string(out[:size])
+	return out[:size]
 }
 
-// Decode decodes a Base58 string into binary bytes
-// using the default alphabet.
-func Decode(str string) ([]byte, error) {
-	return DecodeAlphabet(str, StdAlphabet)
-}
-
-// DecodeAlphabet decodes a Base58 string into binary bytes
-// using the given alphabet.
-func DecodeAlphabet(str string, alphabet *helper.Alphabet) ([]byte, error) {
+// DecodeString decodes a Base58 string into binary bytes.
+func (enc *Encoding) DecodeString(str string) ([]byte, error) {
 	if len(str) == 0 {
 		return nil, nil
 	}
 
-	zero := alphabet.Encode[0]
+	zero := enc.EncChars[0]
 	strLen := len(str)
 
 	var zcount int
@@ -129,11 +123,11 @@ func DecodeAlphabet(str string, alphabet *helper.Alphabet) ([]byte, error) {
 		if r > 127 {
 			return nil, fmt.Errorf("Base%d: high-bit set on invalid digit", Base)
 		}
-		if alphabet.Decode[r] == -1 {
+		if enc.DecMap[r] == -1 {
 			return nil, fmt.Errorf("Base%d: invalid digit %q", Base, r)
 		}
 
-		c = uint64(alphabet.Decode[r])
+		c = uint64(enc.DecMap[r])
 
 		for j := len(outi) - 1; j >= 0; j-- {
 			t = uint64(outi[j])*uint64(Base) + c

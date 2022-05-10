@@ -30,7 +30,7 @@ code copied from <https://github.com/mr-tron/base58>:
 - [base62](./base62/)
 - [base91](./base91/)
 - [base92](./base92/)
-- [helper](./helper/) (common code)
+- [encoding](./encoding/) (common code)
 
 All these previous BaseXX encoders
 support customized encoding alphabet
@@ -39,8 +39,8 @@ without any performance tradeoff.
 ## Ascii85 convenient abstraction
 
 This repo also ships the [Ascii85](./xascii85/),
-a layer on top of the `"encoding/ascii85"`
-standard library to provide the same function signature:
+a layer on top of the `"encoding/ascii85"`standard library
+to provide the following function signature:
 
 ```go
 func Encode(bin []byte) string
@@ -119,12 +119,12 @@ func main() {
 
     // Use custom alphabet, not applicable for xascii85
 
-    var noSpace = base92.NewAlphabet(
+    var noSpace = base92.NewEncoding(
         "!#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNO" +
         "PQRSTUVWXYZ[]^_`abcdefghijklmnopqrstuvwxyz{|}~")
 
-    txt := base92.EncodeAlphabet(bin, noSpace)
-    bin, err = base92.DecodeAlphabet(txt, noSpace)
+    txt := noSpace.EncodeToString(bin)
+    bin, err = noSpace.DecodeString(txt)
 }
 ```
 
@@ -139,49 +139,51 @@ $ go test -run=NO -bench=. -benchmem github.com/teal-finance/BaseXX/...
 goos: linux
 goarch: amd64
 pkg: github.com/teal-finance/BaseXX/ac/base91
-cpu: AMD Ryzen 9 3900X 12-Core Processor
-BenchmarkEncode-24           228           5165122 ns/op         6642451 B/op         34 allocs/op
-BenchmarkDecode-24           225           5753119 ns/op         5241609 B/op         33 allocs/op
+cpu: AMD Ryzen 9 3900X 12-Core Processor            
+BenchmarkEncode-24           234           5098065 ns/op         6642443 B/op         34 allocs/op
+BenchmarkDecode-24           217           5285605 ns/op         5241612 B/op         33 allocs/op
 PASS
-ok      github.com/teal-finance/BaseXX/ac/base91        3.584s
+ok      github.com/teal-finance/BaseXX/ac/base91        3.456s
+?       github.com/teal-finance/BaseXX/ac/base91/cmd/base91     [no test files]
 goos: linux
 goarch: amd64
 pkg: github.com/teal-finance/BaseXX/base58
-cpu: AMD Ryzen 9 3900X 12-Core Processor
-BenchmarkEncode-24                       1000000              1586 ns/op              96 B/op          2 allocs/op
-BenchmarkEncodeMrTronBase58-24            596448              1743 ns/op              96 B/op          2 allocs/op
-BenchmarkDecode-24                       1588452               736.3 ns/op           127 B/op          2 allocs/op
-BenchmarkDecodeMrTronBase58-24           1505677               809.6 ns/op           127 B/op          2 allocs/op
+cpu: AMD Ryzen 9 3900X 12-Core Processor            
+BenchmarkEncode-24                       1000000              1706 ns/op              96 B/op          2 allocs/op
+BenchmarkEncodeMrTronBase58-24           1000000              1802 ns/op              96 B/op          2 allocs/op
+BenchmarkDecode-24                       1611724               733.3 ns/op           127 B/op          2 allocs/op
+BenchmarkDecodeMrTronBase58-24           1632877               741.9 ns/op           127 B/op          2 allocs/op
 PASS
-ok      github.com/teal-finance/BaseXX/base58   6.859s
+ok      github.com/teal-finance/BaseXX/base58   7.445s
 goos: linux
 goarch: amd64
 pkg: github.com/teal-finance/BaseXX/base62
-cpu: AMD Ryzen 9 3900X 12-Core Processor
-BenchmarkEncode-24        901647              1915 ns/op              96 B/op          2 allocs/op
-BenchmarkDecode-24       1573705               789.6 ns/op           127 B/op          2 allocs/op
+cpu: AMD Ryzen 9 3900X 12-Core Processor            
+BenchmarkEncode-24        908791              1360 ns/op              48 B/op          1 allocs/op
+BenchmarkDecode-24       1524541               759.1 ns/op           127 B/op          2 allocs/op
 PASS
-ok      github.com/teal-finance/BaseXX/base62   3.783s
+ok      github.com/teal-finance/BaseXX/base62   4.193s
 goos: linux
 goarch: amd64
 pkg: github.com/teal-finance/BaseXX/base91
-cpu: AMD Ryzen 9 3900X 12-Core Processor
-BenchmarkEncode-24               1000000              2074 ns/op              96 B/op          2 allocs/op
-BenchmarkEncodeACBase91-24       3479275               331.1 ns/op           120 B/op          4 allocs/op
-BenchmarkDecode-24               2181652               647.6 ns/op           124 B/op          2 allocs/op
-BenchmarkDecodeACBase91-24       3946309               304.2 ns/op            56 B/op          3 allocs/op
+cpu: AMD Ryzen 9 3900X 12-Core Processor            
+BenchmarkEncode-24               1000000              1383 ns/op              48 B/op          1 allocs/op
+BenchmarkEncodeACBase91-24       2823261               422.7 ns/op           168 B/op          5 allocs/op
+BenchmarkDecode-24               1709204               691.3 ns/op           124 B/op          2 allocs/op
+BenchmarkDecodeACBase91-24       2849089               416.9 ns/op           104 B/op          4 allocs/op
 PASS
-ok      github.com/teal-finance/BaseXX/base91   7.094s
+ok      github.com/teal-finance/BaseXX/base91   6.562s
 goos: linux
 goarch: amd64
 pkg: github.com/teal-finance/BaseXX/base92
-cpu: AMD Ryzen 9 3900X 12-Core Processor
-BenchmarkEncode-24                        692828              2008 ns/op              96 B/op          2 allocs/op
-BenchmarkEncodeSmartgoBase92-24           136118              7472 ns/op            1377 B/op         78 allocs/op
-BenchmarkDecode-24                       3127748               381.6 ns/op           122 B/op          2 allocs/op
-BenchmarkDecodeSmartgoBase92-24           619510              1990 ns/op             232 B/op          8 allocs/op
+cpu: AMD Ryzen 9 3900X 12-Core Processor            
+BenchmarkEncode-24                        891435              1349 ns/op              48 B/op          1 allocs/op
+BenchmarkEncodeSmartgoBase92-24           140588              8100 ns/op            1377 B/op         78 allocs/op
+BenchmarkDecode-24                       1795351               665.8 ns/op           122 B/op          2 allocs/op
+BenchmarkDecodeSmartgoBase92-24           335845              3459 ns/op             232 B/op          8 allocs/op
 PASS
-ok      github.com/teal-finance/BaseXX/base92   6.437s
+ok      github.com/teal-finance/BaseXX/base92   6.344s
+?       github.com/teal-finance/BaseXX/encoding [no test files]
 PASS
 ok      github.com/teal-finance/BaseXX/xascii85 0.002s
 ```
