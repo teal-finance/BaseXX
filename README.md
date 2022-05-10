@@ -23,28 +23,38 @@ Base92  0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+/=*-_~.,?
 ## Fork of mr-tron/base58
 
 Originally, BaseXX is a fork of <https://github.com/mr-tron/base58>
-adapted to support other bases. The following folders contain
-code copied from <https://github.com/mr-tron/base58>:
+adapted to support other bases:
 
-- [base58](./base58/)
-- [base62](./base62/)
-- [base91](./base91/)
-- [base92](./base92/)
-- [encoding](./encoding/) (common code)
+- [`base58`](./base58/)
+- [`base62`](./base62/)
+- [`base91`](./base91/)
+- [`base92`](./base92/)
+- [`xascii85`](./xascii85/)
 
-All these previous BaseXX encoders
+All these packages, except `xascii85`,
 support customized encoding alphabet
 without any performance tradeoff.
 
-## Ascii85 convenient abstraction
+The `xascii85` package is just a layer on top of `"encoding/ascii85"`
+to provide the same API as the other packages.
 
-This repo also ships the [Ascii85](./xascii85/),
-a layer on top of the `"encoding/ascii85"`standard library
-to provide the following function signature:
+## Common interface
+
+All these packages aim to provide the following API:
 
 ```go
-func Encode(bin []byte) string
-func Decode(str string) ([]byte, error)
+func NewEncoding(alphabet string) *Encoding
+
+interface Encoding {
+    Encode(bin []byte) []byte
+    Decode(ascii []byte) ([]byte, error)
+
+    EncodeToString(bin []byte) string
+    DecodeString(ascii string) ([]byte, error)
+
+    EncodedLen(n int) int
+    DecodedLen(n int) int
+}
 ```
 
 ## Faster than unix-world/smartgo

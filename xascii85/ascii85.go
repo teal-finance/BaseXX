@@ -15,32 +15,54 @@ package xascii85
 
 import (
 	"encoding/ascii85"
-	"fmt"
 )
 
-// Encode encodes a slice of bytes into an Ascii85 string
+// Encoding is just an empty type
+// to provide the same inferface than "encoding/base64".
+type Encoding struct{}
+
+// StdEncoding is an empty value just
+// to provide the same inferface than "encoding/base64".
+var StdEncoding = Encoding{}
+
+// NewEncoding creates a fake Encoding just
+// to provide the same inferface than "encoding/base64".
+func NewEncoding(_ string) *Encoding {
+	return &Encoding{}
+}
+
+// EncodeToString encodes binary bytes into Ascii85 bytes.
+func (enc *Encoding) EncodeToString(bin []byte) string {
+	return string(enc.Encode(bin))
+}
+
+// EncodeToString encodes binary bytes into a Ascii85 string
 // allocating the destination buffer at the right size.
-func Encode(bin []byte) string {
+func (enc *Encoding) Encode(bin []byte) []byte {
 	max := ascii85.MaxEncodedLen(len(bin))
 	str := make([]byte, max)
 	n := ascii85.Encode(str, bin)
-	return string(str[:n])
+	return str[:n]
 }
 
-// Decode decodes an Ascii85 string into a slice of bytes
+// DecodeString decodes an Ascii85 string into a slice of bytes
 // allocating the destination buffer at the right size.
-func Decode(str string) ([]byte, error) {
-	max := MaxDecodedLen(len(str))
-	bin := make([]byte, max)
-
-	n, _, err := ascii85.Decode(bin, []byte(str), true)
-	if err != nil {
-		return nil, fmt.Errorf("ascii85.Decode %w", err)
-	}
-
-	return bin[:n], nil
+func (enc *Encoding) DecodeString(str string) ([]byte, error) {
+	return enc.Decode([]byte(str))
 }
 
-// MaxDecodedSize returns the maximum length required to decode n binary bytes.
+// Decode decodes Ascii85-encoded bytes into a slice of bytes
+// allocating the destination buffer at the right size.
+func (enc *Encoding) Decode(a85 []byte) ([]byte, error) {
+	max := enc.DecodedLen(len(a85))
+	bin := make([]byte, max)
+	n, _, err := ascii85.Decode(bin, []byte(a85), true)
+	return bin[:n], err
+}
+
+// EncodedLen returns the maximum length in bytes required to encode n bytes.
+func (enc *Encoding) EncodedLen(n int) int { return ascii85.MaxEncodedLen(n) }
+
+// DecodedLen returns the maximum length in bytes required to decode n Ascii85-encoded bytes.
 // Ascii85 encodes 4 bytes 0x0000 by only one byte "z".
-func MaxDecodedLen(n int) int { return 4 * n }
+func (enc *Encoding) DecodedLen(n int) int { return 4 * n }
