@@ -97,9 +97,8 @@ cookie token encoding.
 
 ## Usage
 
-In this [example](./example/base92.go)
-replace `base92` by `base58`, `base62`,
-`base91` or `xascii85`.
+In the following example replace `base92` by
+`base58`, `base62`, `base91` (or `xascii85`).
 
 ```go
 package main
