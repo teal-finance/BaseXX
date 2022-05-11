@@ -28,6 +28,7 @@ storage and readability are not of concern.
 Base58 encoding serves double purpose:
 
 1. Long data presented in short format (compression of sorts)
+
 2. Human readable by removing ambiguous characters
 
 To meet this requirements, Base58 avoiding punctuation ("+" and "/") and
@@ -43,6 +44,7 @@ Provided alphabets
 The package provides two encoding alphabets:
 
 * the alphabet used to represent Bitcoin addresses (the default one)
+
 * the alphabet used by Flickr (different lower/upper case order)
 
 	BTC    123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz
