@@ -23,15 +23,15 @@ func ExampleEncoding_Encode() {
 	str := base92.StdEncoding.EncodeToString(bin)
 
 	fmt.Println("Binary input: ", bin)
-	fmt.Println("Base92 string:", str)
+	fmt.Printf("Base92 string: %q\n", str)
 	// Output:
 	// Binary input:  [0 1 2 3 4 5 6 7 8 9 255]
-	// Base92 string: !2V2aO7r^-Kf
+	// Base92 string: " !2V2aO7r^-Kf"
 }
 
 // Decode back the encoded Base92 string
 func ExampleEncoding_DecodeString() {
-	bin, err := base92.StdEncoding.DecodeString("!2V2aO7r^-Kf")
+	bin, err := base92.StdEncoding.DecodeString(" !2V2aO7r^-Kf")
 
 	fmt.Println("Binary:", bin)
 	fmt.Println("Error: ", err)
