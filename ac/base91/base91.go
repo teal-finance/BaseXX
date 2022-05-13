@@ -69,9 +69,9 @@ func Encode(d []byte) []byte {
 	return o
 }
 
-// DecodeToString decodes a given byte array are returns a string
-func DecodeToString(d []byte) string {
-	return string(Decode(d))
+// DecodeString decodes a given byte array are returns a string
+func DecodeString(d string) []byte {
+	return Decode([]byte(d))
 }
 
 // Decode decodes a base91 encoded string and returns the result
