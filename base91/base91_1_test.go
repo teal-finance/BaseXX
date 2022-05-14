@@ -23,23 +23,20 @@ import (
 
 	equimBase91 "github.com/Equim-chan/base91-go"
 	bproctorBase91 "github.com/bproctor/base91"
-
-	// breezechenBase91 "github.com/breezechen/base91"
-
 	majestrateBase91 "github.com/majestrate/base91"
 	mtraverBase91 "github.com/mtraver/base91"
+	// having bugs:
 	// acBase91 "github.com/teal-finance/BaseXX/ac/base91"
+	// breezechenBase91 "github.com/breezechen/base91"
 )
 
-const nn = 11
+const nn = 1111
 const nnn = 1024 // power of two to speed up the % modulo
 var bin [][]byte
 
 const benchChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!#$%&()*+,./:;<=>?@[]^_`{|}~'"
-//nst benchChar2 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!#$%&()*+,./:;<=>?@[]^_`{|}~\""
 
 var benchEncoding = NewEncoding(benchChars)
-
 
 var tstEncoding = NewEncoding(btcDigits[:Base])
 
@@ -92,7 +89,7 @@ var btcDigits = "" +
 	"123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz" +
 	" !0OIl()*+[\\]^_`{|}~;:#$<=>%&',-./?@"
 
-func TestInvalidEncodingTooShort(t *testing.T) {
+func TestNewEncoding_InvalidTooShort(t *testing.T) {
 	defer func() {
 		if r := recover(); r == nil {
 			t.Errorf("Expected panic on alphabet being too short did not occur")
@@ -102,7 +99,7 @@ func TestInvalidEncodingTooShort(t *testing.T) {
 	_ = NewEncoding(btcDigits[:Base-1]) // too short
 }
 
-func TestInvalidEncodingTooLong(t *testing.T) {
+func TestNewEncoding_InvalidTooLong(t *testing.T) {
 	defer func() {
 		if r := recover(); r == nil {
 			t.Errorf("Expected panic on alphabet being too long did not occur")
@@ -112,7 +109,7 @@ func TestInvalidEncodingTooLong(t *testing.T) {
 	_ = NewEncoding(btcDigits) // too long
 }
 
-func TestInvalidEncodingNon127(t *testing.T) {
+func TestNewEncoding_InvalidNon127(t *testing.T) {
 	defer func() {
 		if r := recover(); r == nil {
 			t.Errorf("Expected panic on alphabet containing non-ascii chars did not occur")
@@ -122,17 +119,17 @@ func TestInvalidEncodingNon127(t *testing.T) {
 	_ = NewEncoding("\xFF" + btcDigits[:Base-1]) // good length
 }
 
-func TestInvalidEncodingDup(t *testing.T) {
+func TestNewEncoding_InvalidDup(t *testing.T) {
 	defer func() {
 		if r := recover(); r == nil {
 			t.Errorf("Expected panic on alphabet containing duplicate chars did not occur")
 		}
 	}()
 
-	_ = NewEncoding(btcDigits[:1] + btcDigits[:Base-1]) // good length, but 1st char duplicated
+	_ = (btcDigits[:1] + btcDigits[:Base-1]) // good length, but 1st char duplicated
 }
 
-func TestFastEqTrivialEncodingAndDecoding(t *testing.T) {
+func TestEncoding_EncodeToString_DecodeString(t *testing.T) {
 	for k := 0; k < 10; k++ {
 		testEncDecLoop(t, randEncoding())
 	}
@@ -161,9 +158,8 @@ func testEncDecLoop(t *testing.T, enc *Encoding) {
 
 var sAscii []string
 
-func TestBDecode(t *testing.T) {
+func TestEncoding_DecodeString(t *testing.T) {
 	setup(&sAscii, benchEncoding.EncodeToString)
-
 	for i := 0; i < nnn; i++ {
 		b, err := benchEncoding.DecodeString(sAscii[i])
 		if err != nil {
@@ -178,7 +174,7 @@ func TestBDecode(t *testing.T) {
 	}
 }
 
-func BenchmarkEncode(b *testing.B) {
+func BenchmarkEncoding_Encode(b *testing.B) {
 	setupBin()
 	b.ResetTimer()
 
@@ -187,7 +183,16 @@ func BenchmarkEncode(b *testing.B) {
 	}
 }
 
-func BenchmarkDecode(b *testing.B) {
+func BenchmarkEncoding_EncodeToString(b *testing.B) {
+	setupBin()
+	b.ResetTimer()
+
+	for i := 0; i < b.N; i++ {
+		benchEncoding.EncodeToString(bin[i%nnn])
+	}
+}
+
+func BenchmarkEncoding_DecodeString(b *testing.B) {
 	setup(&sAscii, benchEncoding.EncodeToString)
 	b.ResetTimer()
 
@@ -196,7 +201,177 @@ func BenchmarkDecode(b *testing.B) {
 	}
 }
 
-/*
+var bproctorAscii [][]byte
+
+/* Just to verify "github.com/bproctor/base91"
+func TestBproctorBase91(t *testing.T) {
+	setup(&bproctorAscii, bproctorBase91.Encode)
+	for i := 0; i < nnn; i++ {
+		b := bproctorBase91.Decode(bproctorAscii[i])
+		if bytes.Compare(b, bin[i]) != 0 {
+			t.Errorf("#%d ascii: %v", i, bproctorAscii[i])
+			t.Errorf("#%d want: %x", i, bin[i])
+			t.Errorf("#%d got : %x", i, b)
+			t.FailNow()
+		}
+	}
+}*/
+
+func BenchmarkBproctorBase91_Decode(b *testing.B) {
+	setup(&bproctorAscii, bproctorBase91.Encode)
+	b.ResetTimer()
+
+	for i := 0; i < b.N; i++ {
+		_ = bproctorBase91.Decode(bproctorAscii[i%nnn])
+	}
+}
+
+var equimAscii []string
+
+/* Just to verify "github.com/Equim-chan/base91-go"
+func TestEquimBase91(t *testing.T) {
+	setup(&equimAscii, equimBase91.EncodeToString)
+	for i := 0; i < nnn; i++ {
+		b := equimBase91.DecodeString(equimAscii[i])
+		if bytes.Compare(b, bin[i]) != 0 {
+			t.Errorf("#%d ascii: %v", i, equimAscii[i])
+			t.Errorf("#%d want: %x", i, bin[i])
+			t.Errorf("#%d got : %x", i, b)
+			t.FailNow()
+		}
+	}
+}*/
+
+func BenchmarkEquimBase91_Decode(b *testing.B) {
+	setup(&equimAscii, equimBase91.EncodeToString)
+	b.ResetTimer()
+
+	for i := 0; i < b.N; i++ {
+		equimBase91.DecodeString(equimAscii[i%nnn])
+	}
+}
+
+var majestrateAscii [][]byte
+
+/* Just to verify "github.com/majestrate/base91"
+func TestMajestrateBase91(t *testing.T) {
+	setup(&majestrateAscii, majestrateBase91.Encode)
+	for i := 0; i < nnn; i++ {
+		b, err := majestrateBase91.Decode(majestrateAscii[i])
+		if err != nil {
+			t.Fatalf("#%d err=%v ascii=%v", i, err, majestrateAscii[i])
+		}
+		if bytes.Compare(b, bin[i]) != 0 {
+			t.Errorf("#%d ascii: %v", i, majestrateAscii[i])
+			t.Errorf("#%d want: %x", i, bin[i])
+			t.Errorf("#%d got : %x", i, b)
+			t.FailNow()
+		}
+	}
+}*/
+
+func BenchmarkMajestrateBase91_Decode(b *testing.B) {
+	setup(&majestrateAscii, majestrateBase91.Encode)
+	b.ResetTimer()
+
+	for i := 0; i < b.N; i++ {
+		_, _ = majestrateBase91.Decode(majestrateAscii[i%nnn])
+	}
+}
+
+var mtraverEncoding = mtraverBase91.NewEncoding(benchChars)
+var mtraverAsciiS []string
+var mtraverAsciiB [][]byte
+
+/* Just to verify "github.com/mtraver/base91"
+func TestMtraverBase91(t *testing.T) {
+	setup(&mtraverAsciiS, mtraverEncoding.EncodeToString)
+	if len(mtraverAsciiS) == 0 {
+		t.Fatal("len=0")
+	}
+
+	setup(&mtraverAsciiB, func(src []byte) []byte {
+		dst := make([]byte, 2*len(src))
+		n := mtraverEncoding.Encode(dst, src)
+		return dst[:n]
+	})
+
+	buf := make([]byte, 2*nn)
+
+	for i := 0; i < nnn; i++ {
+		if mtraverAsciiS[i] != string(mtraverAsciiB[i]) {
+			t.Errorf("#%d asciiS: %d %q", i, len(mtraverAsciiS[i]), mtraverAsciiS[i])
+			t.Fatalf("#%d asciiB: %d %q", i, len(mtraverAsciiB[i]), mtraverAsciiB[i])
+		}
+
+		b, err := mtraverEncoding.DecodeString(mtraverAsciiS[i])
+		if err != nil {
+			t.Fatalf("S #%d err=%v ascii=%v", i, err, mtraverAsciiS[i])
+		}
+		if bytes.Compare(b, bin[i]) != 0 {
+			t.Errorf("S #%d len=%d ascii: %v", i, len(mtraverAsciiS[i]), mtraverAsciiS[i])
+			t.Errorf("S #%d len=%d want: %x", i, len(bin[i]), bin[i])
+			t.Errorf("S #%d len=%d got : %x", i, len(b), b)
+			t.FailNow()
+		}
+
+		n, err := mtraverEncoding.Decode(buf, mtraverAsciiB[i])
+		b = buf[:n]
+		if err != nil {
+			t.Fatalf("B #%d err=%v ascii=%v", i, err, mtraverAsciiS[i])
+		}
+		if bytes.Compare(b, bin[i]) != 0 {
+			t.Errorf("B #%d len=%d ascii: %v", i, len(mtraverAsciiS[i]), mtraverAsciiS[i])
+			t.Errorf("B #%d len=%d want: %x", i, len(bin[i]), bin[i])
+			t.Errorf("B #%d len=%d got : %x", i, len(b), b)
+			t.FailNow()
+		}
+	}
+}*/
+
+func BenchmarkMtraverBase91_EncodeToString(b *testing.B) {
+	setupBin()
+	b.ResetTimer()
+
+	for i := 0; i < b.N; i++ {
+		_ = mtraverEncoding.EncodeToString(bin[i%nnn])
+	}
+}
+
+func BenchmarkMtraverBase91_Encode(b *testing.B) {
+	setupBin()
+	b.ResetTimer()
+
+	buf := make([]byte, 2*nn)
+	for i := 0; i < b.N; i++ {
+		_ = mtraverEncoding.Encode(buf, bin[i%nnn])
+	}
+}
+
+func BenchmarkMtraverBase91_DecodeString(b *testing.B) {
+	setup(&mtraverAsciiS, mtraverEncoding.EncodeToString)
+	b.ResetTimer()
+
+	for i := 0; i < b.N; i++ {
+		_, _ = mtraverEncoding.DecodeString(mtraverAsciiS[i%nnn])
+	}
+}
+func BenchmarkMtraverBase91_Decode(b *testing.B) {
+	setup(&mtraverAsciiB, func(src []byte) []byte {
+		dst := make([]byte, 2*len(src))
+		n := mtraverEncoding.Encode(dst, src)
+		return dst[:n]
+	})
+	b.ResetTimer()
+
+	buf := make([]byte, 2*nn)
+	for i := 0; i < b.N; i++ {
+		_, _ = mtraverEncoding.Decode(buf, mtraverAsciiB[i%nnn])
+	}
+}
+
+/* HAVING BUGS:
+
 var acAscii [][]byte
 
 func TestBDecodeACBase91(t *testing.T) {
@@ -229,34 +404,7 @@ func BenchmarkDecodeACBase91(b *testing.B) {
 		_ = acBase91.Decode(dataValues[i%n].bAscii)
 	}
 }
-*/
 
-var bproctorAscii [][]byte
-
-func TestBDecodeBproctorBase91(t *testing.T) {
-	setup(&bproctorAscii, bproctorBase91.Encode)
-	for i := 0; i < nnn; i++ {
-		b := bproctorBase91.Decode(bproctorAscii[i])
-		if bytes.Compare(b, bin[i]) != 0 {
-			t.Errorf("#%d ascii: %v", i, bproctorAscii[i])
-			t.Errorf("#%d want: %x", i, bin[i])
-			t.Errorf("#%d got : %x", i, b)
-			t.FailNow()
-		}
-	}
-
-}
-
-func BenchmarkDecodeBproctorBase91(b *testing.B) {
-	setup(&bproctorAscii, bproctorBase91.Encode)
-	b.ResetTimer()
-
-	for i := 0; i < b.N; i++ {
-		_ = bproctorBase91.Decode(bproctorAscii[i%nnn])
-	}
-}
-
-/*
 var breezechenEncoding = breezechenBase91.StdEncoding // breezechenBase91.NewEncoding(benchChars)
 var breezechenAscii [][]byte
 
@@ -293,87 +441,3 @@ func BenchmarkDecodeBreezechenBase91(b *testing.B) {
 	}
 }
 */
-
-var equimAscii []string
-
-func TestBDecodeEquimBase91(t *testing.T) {
-	setup(&equimAscii, equimBase91.EncodeToString)
-	for i := 0; i < nnn; i++ {
-		b := equimBase91.DecodeString(equimAscii[i])
-		if bytes.Compare(b, bin[i]) != 0 {
-			t.Errorf("#%d ascii: %v", i, equimAscii[i])
-			t.Errorf("#%d want: %x", i, bin[i])
-			t.Errorf("#%d got : %x", i, b)
-			t.FailNow()
-		}
-	}
-
-}
-
-func BenchmarkDecodeEquimBase91(b *testing.B) {
-	setup(&equimAscii, equimBase91.EncodeToString)
-	b.ResetTimer()
-
-	for i := 0; i < b.N; i++ {
-		equimBase91.DecodeString(equimAscii[i%nnn])
-	}
-}
-
-var majestrateAscii [][]byte
-
-func TestBDecodeMajestrateBase91(t *testing.T) {
-	setup(&majestrateAscii, majestrateBase91.Encode)
-	for i := 0; i < nnn; i++ {
-		b, err := majestrateBase91.Decode(majestrateAscii[i])
-		if err != nil {
-			t.Fatalf("#%d err=%v ascii=%v", i, err, majestrateAscii[i])
-		}
-		if bytes.Compare(b, bin[i]) != 0 {
-			t.Errorf("#%d ascii: %v", i, majestrateAscii[i])
-			t.Errorf("#%d want: %x", i, bin[i])
-			t.Errorf("#%d got : %x", i, b)
-			t.FailNow()
-		}
-	}
-}
-
-func BenchmarkDecodeMajestrateBase91(b *testing.B) {
-	setup(&majestrateAscii, majestrateBase91.Encode)
-	b.ResetTimer()
-
-	for i := 0; i < b.N; i++ {
-		_, _ = majestrateBase91.Decode(majestrateAscii[i%nnn])
-	}
-}
-
-var mtraverEncoding = mtraverBase91.NewEncoding(benchChars)
-var mtraverAscii []string
-
-func TestBDecodeMtraverBase91Std(t *testing.T) {
-	setup(&mtraverAscii, mtraverEncoding.EncodeToString)
-	if len(mtraverAscii) == 0 {
-		t.Fatal("len=0")
-	}
-
-	for i := 0; i < nnn; i++ {
-		b, err := mtraverEncoding.DecodeString(mtraverAscii[i])
-		if err != nil {
-			t.Fatalf("#%d err=%v ascii=%v", i, err, mtraverAscii[i])
-		}
-		if bytes.Compare(b, bin[i]) != 0 {
-			t.Errorf("#%d len=%d ascii: %v", i, len(mtraverAscii[i]), mtraverAscii[i])
-			t.Errorf("#%d len=%d want: %x", i, len(bin[i]), bin[i])
-			t.Errorf("#%d len=%d got : %x", i, len(b), b)
-			t.FailNow()
-		}
-	}
-}
-
-func BenchmarkDecodeMtraverBase91(b *testing.B) {
-	setup(&mtraverAscii, mtraverEncoding.EncodeToString)
-	b.ResetTimer()
-
-	for i := 0; i < b.N; i++ {
-		_, _ = mtraverEncoding.DecodeString(mtraverAscii[i%nnn])
-	}
-}
