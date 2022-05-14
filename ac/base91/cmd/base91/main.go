@@ -31,7 +31,7 @@ func main() {
 						// error
 						fmt.Fprintln(os.Stderr, err.Error())
 					} else {
-						fmt.Print(base91.DecodeToString(content))
+						fmt.Print(base91.Decode(content))
 					}
 				} else if os.Args[2] == "-" {
 					var input []byte
@@ -44,7 +44,7 @@ func main() {
 						fmt.Println(err)
 					}
 
-					fmt.Print(base91.DecodeToString(input))
+					fmt.Print(base91.Decode(input))
 				}
 			} else {
 				// help
