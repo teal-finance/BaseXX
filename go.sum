@@ -1,4 +1,14 @@
+ekyu.moe/base91 v0.2.3 h1:1jCZrrpWjDSMMjjU9LANfQV+n7EHeW0OQ0MO9fpDRHg=
+ekyu.moe/base91 v0.2.3/go.mod h1:/qmmaFUj5d0p9xcpj8beZDj33yXrc54eGU+hO/V5vuo=
+github.com/Equim-chan/base91-go v0.2.3 h1:B+Wm6yBWXKBmCfYUC7NpoPG8OLcfyrSShxxM3+MsU+w=
+github.com/Equim-chan/base91-go v0.2.3/go.mod h1:xgmMTzvb7vMAQ9XIiUNuhAZbBUpWXm7Qg8CROEQmJXs=
+github.com/bproctor/base91 v0.0.0-20160902125316-7de6f1dd34e8 h1:AOcLIabtn5jh31VACsbAI1R6y/FjyFRDyuNxkvHmSTI=
+github.com/bproctor/base91 v0.0.0-20160902125316-7de6f1dd34e8/go.mod h1:Qf+Cy/9Oy2JSEKDrf5nBXdsBqEFBNbU8Rzrart5f7h0=
+github.com/majestrate/base91 v0.0.0-20160406115715-9911d3d6c2aa h1:RhQFqtSNJa3IFbKnQ8dC15MlBocE5ANTUfehLwSau0Q=
+github.com/majestrate/base91 v0.0.0-20160406115715-9911d3d6c2aa/go.mod h1:71qyWH76R4syQuLP7X4tbS29trYnjdRcAo5wyYOhMp0=
 github.com/mr-tron/base58 v1.2.0 h1:T/HDJBh4ZCPbU39/+c3rRvE0uKBQlU27+QI8LJ4t64o=
 github.com/mr-tron/base58 v1.2.0/go.mod h1:BinMc/sQntlIE1frQmRFPUoPA1Zkr8VRgBdjWI2mNwc=
-github.com/unix-world/smartgo v0.0.0-20220422190424-359fb51071e3 h1:uEC4FvoR84YEjacHaEpJUM/3+2T6QKJHVjPHoVhbVYY=
-github.com/unix-world/smartgo v0.0.0-20220422190424-359fb51071e3/go.mod h1:JvTC0uo166o12dDx1uHWuT77+tUA+ldS+mlqALwm5Ak=
+github.com/mtraver/base91 v1.0.0 h1:vkIW96Xbw7QH1fbSV5VwXqv+xVuWWZji4O4ty8yYk28=
+github.com/mtraver/base91 v1.0.0/go.mod h1:Igwspit339nKvBhXGqrNOaNI8qGvh+Y4P76q5g4qH2Y=
+github.com/unix-world/smartgo v0.0.0-20220509170635-0a410492b76e h1:ZrTLjCC/OSuK/aLfe8nXEzxKXXQaRmhPT6RFAWMT/gI=
+github.com/unix-world/smartgo v0.0.0-20220509170635-0a410492b76e/go.mod h1:JvTC0uo166o12dDx1uHWuT77+tUA+ldS+mlqALwm5Ak=
