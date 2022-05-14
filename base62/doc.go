@@ -22,12 +22,12 @@ See <https://wikiless.org/wiki/Base62>.
 
 Encoding Alphabet
 
-This package base62 provides the standard alphabet
-using the 62 digits and letters in lower and upper case:
+The default encoding alphabet `StdEncoding`
+uses the 62 digits and letters in lower and upper cases:
 
 	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
 
-You can also provide your own alphabet
+You can also provide your own ASCII alphabet
 containing or not punctuation characters.
 
 Comparison
@@ -40,5 +40,19 @@ Characters often used by common BaseXX encodings:
 	Base58         123456789ABCDEFGH JKLMN PQRSTUVWXYZabcdefghijk mnopqrstuvwxyz
 	Hexadecimal   0123456789ABCDEF
 
+Can be much faster
+
+Performance can be much much improved.
+Using the tips of https://github.com/mtraver/base91
+(original work from Joachim Henke),
+this BaseXX/base92 may become 200 times faster on the encoding,
+and 30 times faster on the decoding.
+
+Contributions welcome
+
+This Base92 needs your help to become faster.
+Please propose your enhancements,
+or even a further refactoring.
+Any contribution is welcome. ;-)
 */
 package base62

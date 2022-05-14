@@ -15,32 +15,59 @@ with customizable encoding alphabet.
 
 Encoding alphabet
 
-This package base91 provides a standard alphabet
-complying with the constraints of the cookie tokens:
-contains the characters from 0x21 (!) to 0x7E (~)
-except " ; and \. This is similar to the base92
-standard alphabet, but without the space character (Ox20).
-You can also provide your own customized alphabet.
+The default encoding alphabet `StdEncoding`
+complies with the constraints of the cookie tokens:
+`StdEncoding` uses 91 characters
+from 0x21 (!) to 0x7E (~) except " ; and \.
 
-Slower than codeberg.org/ac/base91
+You can also provide your own customized alphabet
+with `NewEncoding()`.
 
-For a faster Base91 encoder, you may prefer:
-<https://github.com/teal-finance/BaseXX/ac/base91>
-a fork of <https://codeberg.org/ac/base91>.
-The latter cannot be used because the module name
-"catinello.eu/base91" is not reachable (tested in May 2022).
-However this Base91 encoder does not allow to change
-its specific different alphabet.
+In the following example uses the semicolon ;
+and drops the single ' and double quotes ".
 
-Comparison
+	noQuotes := base91.NewEncoding("" +
+		"abcdefghijklmnopqrstuvwxyz" +
+		"ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+		"0123456789/{|}~.,:;?[]^_`!@#$%&()*+-<=>")
+
+Other BaseXX alphabets
 
 Characters often used by common BaseXX encodings:
 
-	Base91  0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+/=!#$%&'()*,-.:<>?@[]^_`{|}~
+	Base92  0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+/=*-_~.,?!@#$%&()[]{|}<>^:`'"
+	Base91  0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+/=*-_~.,?!@#$%&()[]{|}<>^:`'
 	Base64  0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+/=
 	Base62  0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
 	Base58   123456789ABCDEFGH JKLMN PQRSTUVWXYZabcdefghijk mnopqrstuvwxyz
 	Hexa    0123456789ABCDEF
+
+Slower than the Michael Traver's implementation
+
+The implementation https://github.com/mtraver/base91
+from Joachim Henke and Michael Traver
+is much cleaner and faster:
+	* Standard Encoding interface
+	* 190 times faster encoding
+	* 35 times faster decoding
+
+For a cleaner and faster Base91 encoder,
+you should use: https://github.com/mtraver/base91
+
+Can be much faster
+
+Performance can be much much improved.
+Using the tips of https://github.com/mtraver/base91
+(original work from Joachim Henke),
+this BaseXX/base91 may become 200 times faster on the encoding,
+and 30 times faster on the decoding.
+
+Contributions welcome
+
+This BaseXX/base91 needs your help to become faster.
+Please propose your enhancements,
+or even a further refactoring.
+Any contribution is welcome. ;-)
 
 */
 package base91

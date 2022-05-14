@@ -42,7 +42,7 @@ func ExampleEncoding_DecodeString() {
 
 // With custom alphabet
 func ExampleEncoding_EncodeToString() {
-	var noSingleDoubleQuotes = base91.NewEncoding("" +
+	noSingleDoubleQuotes := base91.NewEncoding("" +
 		"abcdefghijklmnopqrstuvwxyz[]^_`!@#$%&()*+-<=>" +
 		"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/{|}~.,:;?")
 

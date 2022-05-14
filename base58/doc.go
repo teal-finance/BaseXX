@@ -41,11 +41,11 @@ ambiguous digits and letters such as "0", "O" (capital) and "o" (lower-case),
 
 Provided alphabets
 
-The package provides two encoding alphabets:
+This BaseXX/base58 package provides two encoding alphabets:
 
-* the alphabet used to represent Bitcoin addresses (the default one)
+1. the one used to represent Bitcoin addresses (the default one)
 
-* the alphabet used by Flickr (different lower/upper case order)
+2. the one used by Flickr (different lower/upper case order)
 
 	BTC    123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz
     Flickr 123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ
@@ -61,5 +61,19 @@ Characters often used by common BaseXX encodings:
 	Base91  0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+/=*-_~.,?!@#$%&()[]{|}<>^:`'
 	Base92  0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+/=*-_~.,?!@#$%&()[]{|}<>^:`'"
 
+Can be much faster
+
+Performance can be much much improved.
+Using the tips of https://github.com/mtraver/base91
+(original work from Joachim Henke),
+this BaseXX/base92 may become 200 times faster on the encoding,
+and 30 times faster on the decoding.
+
+Contributions welcome
+
+This Base92 needs your help to become faster.
+Please propose your enhancements,
+or even a further refactoring.
+Any contribution is welcome. ;-)
 */
 package base58
