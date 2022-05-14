@@ -59,37 +59,33 @@ interface Encoding {
 
 ## Faster than unix-world/smartgo
 
-BaseXX is very similar to the project
-<https://github.com/unix-world/smartgo>
+BaseXX is similar to <https://github.com/unix-world/smartgo>
 from Radu Ovidiu Ilies who has adapted
-<https://github.com/akamensky/base58>
-to support any base.
+<https://github.com/akamensky/base58> to support any base.
 
 BaseXX shares with [SmartGo](https://github.com/unix-world/smartgo)
 the ability to quickly create new base encoders,
-by copying source files and changing the alphabet.
+by copying source files and changing few things.
 
 The main interest of BaseXX compared to
 [SmartGo](https://github.com/unix-world/smartgo)
-is the performance: BaseXX is five times faster.
+is the performance: BaseXX is five times faster on Base92!
 See the [benchmark results](#benchmark).
 
-## Slower than Base91 by Antonino Catinello
+## Slower than Base91 by Joachim Henke and Michael Traver
 
-This repo contains a
-[copy](<https://github.com/teal-finance/BaseXX/ac/base91>)
-(almost unmodified) of <https://codeberg.org/ac/base91>.
-The latter cannot be used because the module name
-`"catinello.eu/base91"` is not reachable (tested in May 2022).
+The implementation [github.com/mtraver/base91](https://github.com/mtraver/base91)
+is much cleaner and faster:
 
-The implementation of [Antonino Catinello](https://codeberg.org/ac)
+- Standard Encoding interface compliance.
+- 190 times faster encoding!
+- 35 times faster decoding!
+
+See the [benchmark results](#benchmark).
+
 is much faster than BaseXX/base91:
 The Base91 by Antonino encodes six times faster,
 and decodes twice faster.
-See the [benchmark results](#benchmark)
-
-However his Base91 implementation does not allow to change
-the alphabet (but this is possible with some adaptations).
 
 ## Compliance with cookie token standards
 
@@ -140,61 +136,63 @@ func main() {
 ## Benchmark
 
 The benchmark shows this BaseXX project is almost faster than the
-[original project](https://github.com/mr-tron/base58)
-on Base58.
+[original project](https://github.com/mr-tron/base58) on Base58.
 
 ```go
-$ go test -run=NO -bench=. -benchmem github.com/teal-finance/BaseXX/...
 goos: linux
 goarch: amd64
 pkg: github.com/teal-finance/BaseXX/ac/base91
 cpu: AMD Ryzen 9 3900X 12-Core Processor            
-BenchmarkEncode-24           234           5098065 ns/op         6642443 B/op         34 allocs/op
-BenchmarkDecode-24           217           5285605 ns/op         5241612 B/op         33 allocs/op
+BenchmarkEncode-24           236           5220578 ns/op
+BenchmarkDecode-24           222           5695511 ns/op
 PASS
-ok      github.com/teal-finance/BaseXX/ac/base91        3.456s
-?       github.com/teal-finance/BaseXX/ac/base91/cmd/base91     [no test files]
+ok      github.com/teal-finance/BaseXX/ac/base91        3.600s
 goos: linux
 goarch: amd64
 pkg: github.com/teal-finance/BaseXX/base58
 cpu: AMD Ryzen 9 3900X 12-Core Processor            
-BenchmarkEncode-24                       1000000              1706 ns/op              96 B/op          2 allocs/op
-BenchmarkEncodeMrTronBase58-24           1000000              1802 ns/op              96 B/op          2 allocs/op
-BenchmarkDecode-24                       1611724               733.3 ns/op           127 B/op          2 allocs/op
-BenchmarkDecodeMrTronBase58-24           1632877               741.9 ns/op           127 B/op          2 allocs/op
+BenchmarkEncode-24                       1000000              1621 ns/op
+BenchmarkEncodeMrTronBase58-24            663850              1734 ns/op
+BenchmarkDecode-24                       1625545               745.3 ns/op
+BenchmarkDecodeMrTronBase58-24           1602920               742.9 ns/op
 PASS
-ok      github.com/teal-finance/BaseXX/base58   7.445s
+ok      github.com/teal-finance/BaseXX/base58   6.733s
 goos: linux
 goarch: amd64
 pkg: github.com/teal-finance/BaseXX/base62
 cpu: AMD Ryzen 9 3900X 12-Core Processor            
-BenchmarkEncode-24        908791              1360 ns/op              48 B/op          1 allocs/op
-BenchmarkDecode-24       1524541               759.1 ns/op           127 B/op          2 allocs/op
+BenchmarkEncode-24       1000000              1255 ns/op
+BenchmarkDecode-24       1610145               784.7 ns/op
 PASS
-ok      github.com/teal-finance/BaseXX/base62   4.193s
+ok      github.com/teal-finance/BaseXX/base62   3.302s
 goos: linux
 goarch: amd64
 pkg: github.com/teal-finance/BaseXX/base91
 cpu: AMD Ryzen 9 3900X 12-Core Processor            
-BenchmarkEncode-24               1000000              1383 ns/op              48 B/op          1 allocs/op
-BenchmarkEncodeACBase91-24       2823261               422.7 ns/op           168 B/op          5 allocs/op
-BenchmarkDecode-24               1709204               691.3 ns/op           124 B/op          2 allocs/op
-BenchmarkDecodeACBase91-24       2849089               416.9 ns/op           104 B/op          4 allocs/op
+BenchmarkEncoding_Encode-24                         2821            402254 ns/op
+BenchmarkEncoding_EncodeToString-24                 2972            411904 ns/op
+BenchmarkEncoding_DecodeString-24                  15943             84473 ns/op
+BenchmarkBproctorBase91_Decode-24                  39297             29221 ns/op
+BenchmarkEquimBase91_Decode-24                    335587              3520 ns/op
+BenchmarkMajestrateBase91_Decode-24               357110              3220 ns/op
+BenchmarkMtraverBase91_EncodeToString-24          542314              2190 ns/op
+BenchmarkMtraverBase91_Encode-24                 1308085               943.3 ns/op
+BenchmarkMtraverBase91_DecodeString-24            462540              2426 ns/op
+BenchmarkMtraverBase91_Decode-24                 1075700              1063 ns/op
 PASS
-ok      github.com/teal-finance/BaseXX/base91   6.562s
+ok      github.com/teal-finance/BaseXX/base91   14.924s
 goos: linux
 goarch: amd64
 pkg: github.com/teal-finance/BaseXX/base92
 cpu: AMD Ryzen 9 3900X 12-Core Processor            
-BenchmarkEncode-24                        891435              1349 ns/op              48 B/op          1 allocs/op
-BenchmarkEncodeSmartgoBase92-24           140588              8100 ns/op            1377 B/op         78 allocs/op
-BenchmarkDecode-24                       1795351               665.8 ns/op           122 B/op          2 allocs/op
-BenchmarkDecodeSmartgoBase92-24           335845              3459 ns/op             232 B/op          8 allocs/op
+BenchmarkEncode-24                        819314              1415 ns/op
+BenchmarkEncodeSmartgoBase92-24           153697              8140 ns/op
+BenchmarkDecode-24                       1799289               665.9 ns/op
+BenchmarkDecodeSmartgoBase92-24           341623              3501 ns/op
 PASS
-ok      github.com/teal-finance/BaseXX/base92   6.344s
-?       github.com/teal-finance/BaseXX/encoding [no test files]
+ok      github.com/teal-finance/BaseXX/base92   6.616s
 PASS
-ok      github.com/teal-finance/BaseXX/xascii85 0.002s
+ok      github.com/teal-finance/BaseXX/xascii85 0.003s
 ```
 
 ## Feedback
@@ -211,12 +209,57 @@ your contributions are welcome. :wink:
 
 ## See also
 
-Other similar projects:
+Other similar projects
 
-- <https://github.com/mr-tron/base58>
-- <https://github.com/unix-world/smartgo>
-- <https://github.com/bproctor/base91>
-- <https://github.com/breezechen/base91>
-- <https://github.com/Equim-chan/base91-go>
-- <https://github.com/majestrate/base91>
-- <https://github.com/mtraver/base91>
+### Many bases by Radu Ovidiu Ilies
+
+The repo <https://github.com/mr-tron/base58> proposes many bases.
+See section [Faster than unix-world/smartgo](#faster-than-unix-worldsmartgo).
+
+### Base91 by Joachim Henke and Michael Traver
+
+This is the cleanest and fastest Base91 Go-implementation I have found.
+
+Michael Traver has ported to Go the excellent work from Joachim Henke.
+
+See <https://github.com/mtraver/base91>.
+
+### Base91 by Majestrate
+
+Good Base91 implementation at
+<https://github.com/majestrate/base91>.
+I have not find any bug.
+
+### Base91 by Equim
+
+Good Base91 implementation at
+<https://github.com/Equim-chan/base91-go>.
+I have not find any bug.
+
+### Base91 by Brad Proctor
+
+The repo <https://github.com/bproctor/base91>
+is a slow Base91 implementation.
+Still faster than BaseXX/Base91.
+I have not find any bug.
+
+### Base91 by Antonino Catinello
+
+The implementation by [Antonino Catinello](https://codeberg.org/ac)
+is not the fastest, and contains bugs. This repo contains a
+[fork](<https://github.com/teal-finance/BaseXX/ac/base91>)
+(almost unmodified) of <https://codeberg.org/ac/base91>.
+The latter cannot be used because the module name
+`"catinello.eu/base91"` is not reachable (tested in May 2022).
+
+The implementation of [Antonino Catinello](https://codeberg.org/ac)
+is much faster than BaseXX/base91:
+The Base91 by Antonino encodes six times faster,
+and decodes twice faster.
+
+This Base91 implementation does not customize the encoding alphabet.
+
+### Base91 by Chris Snell and Breeze Chen
+
+The repo <https://github.com/breezechen/base91>
+is an unmaintained and buggy Base91 implementation.
