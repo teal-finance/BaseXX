@@ -225,10 +225,10 @@ your contributions are welcome. :wink:
 
 See similar other projects.
 
-### Many bases by Radu Ovidiu Ilies
+### Collection of baseXX by Radu Ovidiu Ilies
 
-The repo <https://github.com/mr-tron/base58> proposes many bases.
-See section [Faster than unix-world/smartgo](#faster-than-unix-worldsmartgo).
+The repo <https://github.com/unix-world/smartgo> proposes many bases.
+See the section [Faster than unix-world/smartgo](#faster-than-unix-worldsmartgo).
 
 ### Base91 by Joachim Henke and Michael Traver
 
