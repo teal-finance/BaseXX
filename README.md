@@ -7,7 +7,6 @@ Go modules: &emsp; &emsp; &emsp; &emsp; &emsp; [![Go Reference](https://pkg.go.d
 [`import "github.com/teal-finance/BaseXX/base91"`](./base91/)  
 [`import "github.com/teal-finance/BaseXX/base92"`](./base92/)  
 [`import "github.com/teal-finance/BaseXX/xascii85"`](./xascii85/)  
-[`import "github.com/teal-finance/BaseXX/ac/base91"`](./ac/base91/)
 
 Characters often used by common BaseXX encodings:
 
@@ -77,9 +76,9 @@ See the [benchmark results](#benchmark).
 The implementation [github.com/mtraver/base91](https://github.com/mtraver/base91)
 is much cleaner and faster:
 
-- Standard Encoding interface compliance.
-- 190 times faster encoding!
-- 35 times faster decoding!
+- Standard Encoding interface
+- 190 times faster encoding
+- 35 times faster decoding
 
 See the [benchmark results](#benchmark).
 
@@ -195,6 +194,21 @@ PASS
 ok      github.com/teal-finance/BaseXX/xascii85 0.003s
 ```
 
+## Can be much faster
+
+Performance can be much much improved.
+Using the tips of <https://github.com/mtraver/base91>
+(original work from Joachim Henke),
+this BaseXX repo may become 200 times faster on the encoding,
+and 30 times faster on the decoding.
+
+## Contributions welcome
+
+This BaseXX repo needs your help to become faster.
+Please propose your enhancements,
+or even a further refactoring.
+Any contribution is welcome. ;-)
+
 ## Feedback
 
 If you have some suggestions, or need a new feature,
@@ -209,7 +223,7 @@ your contributions are welcome. :wink:
 
 ## See also
 
-Other similar projects
+See similar other projects.
 
 ### Many bases by Radu Ovidiu Ilies
 
