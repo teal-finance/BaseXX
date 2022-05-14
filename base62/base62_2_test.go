@@ -20,7 +20,6 @@ import (
 )
 
 func TestBase58_test2(t *testing.T) {
-
 	testAddr := []string{
 		"1QCaxc8hutpdZ62iKZsn1TCG3nh7uPZojq",
 		"1DhRmSGnhPjUaVPAj48zgPV9e2oRhAQFUb",

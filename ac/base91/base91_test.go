@@ -15,7 +15,7 @@ var samples = map[string]string{
 	"abcdefghijklmnopqurstuvwxyz": "#G(Ic,5ph#77&xrmlrjg2]jTs%2<WF%qfB",
 }
 
-// insert in samples a failing case
+// init inserts a failing case in samples.
 func init() {
 	const hexa = "5526a41a95041b"
 	const str = ":Ro7<O'9B"
@@ -40,7 +40,7 @@ func TestEncode(t *testing.T) {
 func TestDecode(t *testing.T) {
 	for bin, s := range samples {
 		b := []byte(bin)
-		if got := DecodeString(s); bytes.Compare(got, b) != 0 {
+		if got := DecodeString(s); !bytes.Equal(got, b) {
 			t.Errorf("Incorrect decoding of %q", s)
 			t.Errorf("want: %x", b)
 			t.Errorf("got : %x", got)

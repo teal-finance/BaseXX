@@ -66,7 +66,7 @@ func NewEncoding(encoder string, base int) *Encoding {
 	return ret
 }
 
-// PanicIfBadApproximation exits when a BaseXX is not well configured
+// PanicIfBadApproximation exits when a BaseXX is not well configured.
 func PanicIfBadApproximation(base, a, b int) {
 	want := math.Log(256) / math.Log(float64(base))
 	got := float64(a) / float64(b)

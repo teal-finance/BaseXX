@@ -16,7 +16,7 @@ import (
 	"github.com/teal-finance/BaseXX/base91"
 )
 
-// Encode any binary data to a Base91 string
+// Encode any binary data to a Base91 string.
 func ExampleEncoding_Encode() {
 	bin := []byte{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 255}
 
@@ -29,7 +29,7 @@ func ExampleEncoding_Encode() {
 	// Base91 string: !#B6*yOw]cPi5
 }
 
-// Decode back the encoded Base91 string
+// Decode back the encoded Base91 string.
 func ExampleEncoding_DecodeString() {
 	bin, err := base91.StdEncoding.DecodeString("!#B6*yOw]cPi5")
 
@@ -40,7 +40,7 @@ func ExampleEncoding_DecodeString() {
 	// Error:  <nil>
 }
 
-// With custom alphabet
+// With custom alphabet.
 func ExampleEncoding_EncodeToString() {
 	noSingleDoubleQuotes := base91.NewEncoding("" +
 		"abcdefghijklmnopqrstuvwxyz[]^_`!@#$%&()*+-<=>" +

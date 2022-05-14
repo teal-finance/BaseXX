@@ -56,7 +56,7 @@ func (enc *Encoding) DecodeString(str string) ([]byte, error) {
 func (enc *Encoding) Decode(a85 []byte) ([]byte, error) {
 	max := enc.DecodedLen(len(a85))
 	bin := make([]byte, max)
-	n, _, err := ascii85.Decode(bin, []byte(a85), true)
+	n, _, err := ascii85.Decode(bin, a85, true)
 	return bin[:n], err
 }
 

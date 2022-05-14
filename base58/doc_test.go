@@ -16,7 +16,7 @@ import (
 	"github.com/teal-finance/BaseXX/base58"
 )
 
-// Encode any binary data to a Base58 string
+// Encode any binary data to a Base58 string.
 func ExampleEncoding_Encode() {
 	bin := []byte{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 254, 255}
 
@@ -29,7 +29,7 @@ func ExampleEncoding_Encode() {
 	// Base58 string: 1FVk6iLh9oT6ivJ
 }
 
-// Decode back the encoded Base58 string
+// Decode back the encoded Base58 string.
 func ExampleEncoding_DecodeString() {
 	bin, err := base58.StdEncoding.DecodeString("1FVk6iLh9oT6ivJ")
 
@@ -40,9 +40,9 @@ func ExampleEncoding_DecodeString() {
 	// Error:  <nil>
 }
 
-// With custom alphabet
+// With custom alphabet.
 func ExampleEncoding_EncodeToString() {
-	var myEncoding = base58.NewEncoding(
+	myEncoding := base58.NewEncoding(
 		"ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz123456789")
 
 	bin := []byte{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 254, 255}

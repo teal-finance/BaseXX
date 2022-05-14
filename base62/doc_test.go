@@ -16,7 +16,7 @@ import (
 	"github.com/teal-finance/BaseXX/base62"
 )
 
-// Encode any binary data to a Base62 string
+// Encode any binary data to a Base62 string.
 func ExampleEncoding_Encode() {
 	bin := []byte{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 255}
 
@@ -29,7 +29,7 @@ func ExampleEncoding_Encode() {
 	// Base62 string: 01TSm0PiyImxMV
 }
 
-// Decode back the encoded Base62 string
+// Decode back the encoded Base62 string.
 func ExampleEncoding_DecodeString() {
 	bin, err := base62.StdEncoding.DecodeString("01TSm0PiyImxMV")
 
@@ -40,9 +40,9 @@ func ExampleEncoding_DecodeString() {
 	// Error:  <nil>
 }
 
-// With custom alphabet
+// With custom alphabet.
 func ExampleEncoding_EncodeToString() {
-	var myEncoding = base62.NewEncoding(
+	myEncoding := base62.NewEncoding(
 		"0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
 
 	bin := []byte{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 254, 255}

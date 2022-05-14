@@ -30,8 +30,11 @@ import (
 	// breezechenBase91 "github.com/breezechen/base91"
 )
 
-const nn = 1111
-const nnn = 1024 // power of two to speed up the % modulo
+const (
+	nn  = 1111
+	nnn = 1024 // power of two to speed up the % modulo
+)
+
 var bin [][]byte
 
 const benchChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!#$%&()*+,./:;<=>?@[]^_`{|}~'"
@@ -126,7 +129,7 @@ func TestNewEncoding_InvalidDup(t *testing.T) {
 		}
 	}()
 
-	_ = (btcDigits[:1] + btcDigits[:Base-1]) // good length, but 1st char duplicated
+	_ = NewEncoding(btcDigits[:1] + btcDigits[:Base-1]) // good length, but 1st char duplicated
 }
 
 func TestEncoding_EncodeToString_DecodeString(t *testing.T) {
@@ -138,8 +141,9 @@ func TestEncoding_EncodeToString_DecodeString(t *testing.T) {
 }
 
 func testEncDecLoop(t *testing.T, enc *Encoding) {
+	t.Helper()
 	for j := 1; j < 256; j++ {
-		var b = make([]byte, j)
+		b := make([]byte, j)
 		for i := 0; i < 100; i++ {
 			rand.Read(b)
 			fe := enc.EncodeToString(b)
@@ -165,7 +169,7 @@ func TestEncoding_DecodeString(t *testing.T) {
 		if err != nil {
 			t.Fatalf("#%d err=%v ascii=%v", i, err, sAscii[i])
 		}
-		if bytes.Compare(b, bin[i]) != 0 {
+		if !bytes.Equal(b, bin[i]) {
 			t.Errorf("#%d ascii: %v", i, sAscii[i])
 			t.Errorf("#%d want: %x", i, bin[i])
 			t.Errorf("#%d got : %x", i, b)
@@ -208,7 +212,7 @@ func TestBproctorBase91(t *testing.T) {
 	setup(&bproctorAscii, bproctorBase91.Encode)
 	for i := 0; i < nnn; i++ {
 		b := bproctorBase91.Decode(bproctorAscii[i])
-		if bytes.Compare(b, bin[i]) != 0 {
+		if !bytes.Equal(b, bin[i]) {
 			t.Errorf("#%d ascii: %v", i, bproctorAscii[i])
 			t.Errorf("#%d want: %x", i, bin[i])
 			t.Errorf("#%d got : %x", i, b)
@@ -233,7 +237,7 @@ func TestEquimBase91(t *testing.T) {
 	setup(&equimAscii, equimBase91.EncodeToString)
 	for i := 0; i < nnn; i++ {
 		b := equimBase91.DecodeString(equimAscii[i])
-		if bytes.Compare(b, bin[i]) != 0 {
+		if !bytes.Equal(b, bin[i]) {
 			t.Errorf("#%d ascii: %v", i, equimAscii[i])
 			t.Errorf("#%d want: %x", i, bin[i])
 			t.Errorf("#%d got : %x", i, b)
@@ -261,7 +265,7 @@ func TestMajestrateBase91(t *testing.T) {
 		if err != nil {
 			t.Fatalf("#%d err=%v ascii=%v", i, err, majestrateAscii[i])
 		}
-		if bytes.Compare(b, bin[i]) != 0 {
+		if !bytes.Equal(b, bin[i]) {
 			t.Errorf("#%d ascii: %v", i, majestrateAscii[i])
 			t.Errorf("#%d want: %x", i, bin[i])
 			t.Errorf("#%d got : %x", i, b)
@@ -279,9 +283,11 @@ func BenchmarkMajestrateBase91_Decode(b *testing.B) {
 	}
 }
 
-var mtraverEncoding = mtraverBase91.NewEncoding(benchChars)
-var mtraverAsciiS []string
-var mtraverAsciiB [][]byte
+var (
+	mtraverEncoding = mtraverBase91.NewEncoding(benchChars)
+	mtraverAsciiS   []string
+	mtraverAsciiB   [][]byte
+)
 
 /* Just to verify "github.com/mtraver/base91"
 func TestMtraverBase91(t *testing.T) {
@@ -308,7 +314,7 @@ func TestMtraverBase91(t *testing.T) {
 		if err != nil {
 			t.Fatalf("S #%d err=%v ascii=%v", i, err, mtraverAsciiS[i])
 		}
-		if bytes.Compare(b, bin[i]) != 0 {
+		if !bytes.Equal(b, bin[i]) {
 			t.Errorf("S #%d len=%d ascii: %v", i, len(mtraverAsciiS[i]), mtraverAsciiS[i])
 			t.Errorf("S #%d len=%d want: %x", i, len(bin[i]), bin[i])
 			t.Errorf("S #%d len=%d got : %x", i, len(b), b)
@@ -320,7 +326,7 @@ func TestMtraverBase91(t *testing.T) {
 		if err != nil {
 			t.Fatalf("B #%d err=%v ascii=%v", i, err, mtraverAsciiS[i])
 		}
-		if bytes.Compare(b, bin[i]) != 0 {
+		if !bytes.Equal(b, bin[i]) {
 			t.Errorf("B #%d len=%d ascii: %v", i, len(mtraverAsciiS[i]), mtraverAsciiS[i])
 			t.Errorf("B #%d len=%d want: %x", i, len(bin[i]), bin[i])
 			t.Errorf("B #%d len=%d got : %x", i, len(b), b)
@@ -356,6 +362,7 @@ func BenchmarkMtraverBase91_DecodeString(b *testing.B) {
 		_, _ = mtraverEncoding.DecodeString(mtraverAsciiS[i%nnn])
 	}
 }
+
 func BenchmarkMtraverBase91_Decode(b *testing.B) {
 	setup(&mtraverAsciiB, func(src []byte) []byte {
 		dst := make([]byte, 2*len(src))
@@ -378,7 +385,7 @@ func TestBDecodeACBase91(t *testing.T) {
 	setup(&acAscii, acBase91.Encode)
 	for i := 0; i < n; i++ {
 		b := acBase91.Decode(acAscii[i])
-		if bytes.Compare(b, bin[i]) != 0 {
+		if !bytes.Equal(b, bin[i]) {
 			t.Errorf("#%d ascii: %v", i, string(acAscii[i]))
 			t.Errorf("#%d want: %x", i, bin[i])
 			t.Errorf("#%d got : %x", i, b)
@@ -405,7 +412,7 @@ func BenchmarkDecodeACBase91(b *testing.B) {
 	}
 }
 
-var breezechenEncoding = breezechenBase91.StdEncoding // breezechenBase91.NewEncoding(benchChars)
+var breezechenEncoding = breezechenBase91.StdEncoding
 var breezechenAscii [][]byte
 
 func TestBDecodeBreezechenBase91(t *testing.T) {

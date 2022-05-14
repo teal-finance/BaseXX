@@ -4,7 +4,7 @@
 // Based on http://base91.sourceforge.net/
 package base91 // import "catinello.eu/base91"
 
-// Encoding table holds all the characters for base91 encoding - slice is faster than an array
+// Encoding table holds all the characters for base91 encoding - slice is faster than an array.
 var enctab = []byte("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!#$%&()*+,./:;<=>?@[]^_`{|}~'")
 
 // Decoding table maps all the characters back to their integer values - array is faster than a map
@@ -28,12 +28,12 @@ var dectab = [...]byte{
 	91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91,
 }
 
-// EncodeToString encodes the given byte array and returns a string
+// EncodeToString encodes the given byte array and returns a string.
 func EncodeToString(d []byte) string {
 	return string(Encode(d))
 }
 
-// Encode returns the base91 encoded string
+// Encode returns the base91 encoded string.
 func Encode(d []byte) []byte {
 	var n, b uint
 	var o []byte
@@ -69,12 +69,12 @@ func Encode(d []byte) []byte {
 	return o
 }
 
-// DecodeString decodes a given byte array are returns a string
+// DecodeString decodes a given byte array are returns a string.
 func DecodeString(d string) []byte {
 	return Decode([]byte(d))
 }
 
-// Decode decodes a base91 encoded string and returns the result
+// Decode decodes a base91 encoded string and returns the result.
 func Decode(d []byte) []byte {
 	var b, n uint
 	var o []byte

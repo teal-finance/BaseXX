@@ -25,7 +25,6 @@ import (
 type testValues struct {
 	dec []byte
 	enc string
-	en2 string // to compare to a different encoder using a different alphabet
 }
 
 var tstEncoding = NewEncoding(btcDigits[:Base])
@@ -121,8 +120,9 @@ func TestFastEqTrivialEncodingAndDecoding(t *testing.T) {
 }
 
 func testEncDecLoop(t *testing.T, enc *Encoding) {
+	t.Helper()
 	for j := 1; j < 256; j++ {
-		var b = make([]byte, j)
+		b := make([]byte, j)
 		for i := 0; i < 100; i++ {
 			rand.Read(b)
 			fe := enc.EncodeToString(b)
