@@ -1,4 +1,3 @@
-// #region <editor-fold desc="Preamble">
 // Copyright (c) 2017-2020 Denis Subbotin, Philip Schlump,
 //                         Nika Jones, Steven Allen, MoonFruit
 // Copyright (c) 2022      Teal.Finance contributors
@@ -7,12 +6,10 @@
 // The source code has been adapted to support other bases.
 // This file is now part of BaseXX under the terms of the MIT License.
 // SPDX-License-Identifier: MIT
-//
-// BaseXX is distributed WITHOUT ANY WARRANTY.
-// See the LICENSE file alongside the source files
-// or online at <https://opensource.org/licenses/MIT>.
-// #endregion </editor-fold>
+// See the LICENSE file or https://opensource.org/licenses/MIT
 
+// Package base91 is a pretty good Base91 encoder
+// with customizable encoding alphabet.
 package base91
 
 import (

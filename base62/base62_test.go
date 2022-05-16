@@ -1,13 +1,7 @@
-// #region <editor-fold desc="Preamble">
 // Copyright (c) 2022 Teal.Finance contributors
-//
-// This file is part of BaseXX under the terms of the MIT License.
+// This file is part of Teal.Finance/BaseXX licensed under the MIT License.
 // SPDX-License-Identifier: MIT
-//
-// BaseXX is distributed WITHOUT ANY WARRANTY.
-// See the LICENSE file alongside the source files
-// or online at <https://opensource.org/licenses/MIT>.
-// #endregion </editor-fold>
+// See the LICENSE file or <https://opensource.org/licenses/MIT>.
 
 package base62
 
