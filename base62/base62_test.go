@@ -1,7 +1,6 @@
 // Copyright (c) 2022 Teal.Finance contributors
 // This file is part of Teal.Finance/BaseXX licensed under the MIT License.
 // SPDX-License-Identifier: MIT
-// See the LICENSE file or <https://opensource.org/licenses/MIT>.
 
 package base62
 
