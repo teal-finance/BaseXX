@@ -56,20 +56,23 @@ interface Encoding {
 }
 ```
 
-## Faster than unix-world/smartgo
+## Similar project
 
-BaseXX is similar to <https://github.com/unix-world/smartgo>
+BaseXX is similar to [SmartGo](https://github.com/unix-world/smartgo)
 from Radu Ovidiu Ilies who has adapted
-<https://github.com/akamensky/base58> to support any base.
+<https://github.com/akamensky/base58> to support any base encoder:
+BaseXX has adapted <https://github.com/mr-tron/base58>
+to support other base encoders.
 
 BaseXX shares with [SmartGo](https://github.com/unix-world/smartgo)
 the ability to quickly create new base encoders,
 by copying source files and changing few things.
 
-The main interest of BaseXX compared to
-[SmartGo](https://github.com/unix-world/smartgo)
-is the performance: BaseXX is five times faster on Base92!
-See the [benchmark results](#benchmark).
+Performance is similar for large input samples,
+but for short inputs, BaseXX is faster.
+
+To compare short inputs, see the [benchmark results](#benchmark).
+To compare larger specific inputs, see the [`bench` command](examples/bench).
 
 ## Slower than Base91 by Joachim Henke and Michael Traver
 
@@ -82,13 +85,9 @@ is much cleaner and faster:
 
 See the [benchmark results](#benchmark).
 
-is much faster than BaseXX/base91:
-The Base91 by Antonino encodes six times faster,
-and decodes twice faster.
+## Compliance with cookie token standard
 
-## Compliance with cookie token standards
-
-The default alphabet of [BaseXX/base58](./base58/),
+The default encoding alphabets of [BaseXX/base58](./base58/),
 [BaseXX/base62](./base62/), [BaseXX/base91](./base91/)
 and [BaseXX/base92](./base92/) conforms with the
 cookie token constraints:
@@ -225,10 +224,11 @@ your contributions are welcome. :wink:
 
 See similar other projects.
 
-### Collection of baseXX by Radu Ovidiu Ilies
+### Collection of baseN by Radu Ovidiu Ilies
 
 The repo <https://github.com/unix-world/smartgo> proposes many bases.
-See the section [Faster than unix-world/smartgo](#faster-than-unix-worldsmartgo).
+
+See the section [*Similar project*](#similar-project).
 
 ### Base91 by Joachim Henke and Michael Traver
 
