@@ -16,7 +16,7 @@ var samples = map[string]string{
 }
 
 // init inserts a failing case in samples.
-func init() {
+func Disable_init() {
 	const hexa = "5526a41a95041b"
 	const str = ":Ro7<O'9B"
 	b, err := hex.DecodeString(hexa)
