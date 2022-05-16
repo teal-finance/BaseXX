@@ -98,15 +98,23 @@ See the [benchmark results](#benchmark).
 
 The default encoding alphabets of [BaseXX/base58](./base58/),
 [BaseXX/base62](./base62/), [BaseXX/base91](./base91/)
-and [BaseXX/base92](./base92/) conforms with the
+and [BaseXX/base92](./base92/) conform with the
 cookie token constraints:
 
-- characters from 0x20 (space) to 0x7E (~) included
-- except three characters: " ; and \
+- characters from 0x20 (space) to 0x7E (tilde `~`) included
+- except three characters: double-quote `"`, semicolon `;` and backslash `\`
 
-The two other encoders, [BaseXX/xascii85](./xascii85/)
-and [BaseXX/ac/base91](./ac/base91/) do not support
-cookie token encoding.
+The [BaseXX/xascii85](./xascii85/) encoder
+do not support these cookie token constraints
+because it uses three forbidden ASCII characters:
+double-quote (`"`), semicolon (`;`) and backslash (`\`).
+
+## Compliance with Bearer token standard
+
+The [RFC 6750](https://www.rfc-editor.org/rfc/rfc6750.html#section-2.1)
+is conservative and recommends to use the following 70 characters:
+
+    0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+-./_~
 
 ## Usage
 
@@ -241,46 +249,46 @@ See the section [*Similar project*](#similar-project).
 
 ### Base91 by Joachim Henke and Michael Traver
 
-This is the cleanest and fastest Base91 Go-implementation I have found.
+This is the cleanest and fastest Base91 Go-implementation
+of all the Base91 benched by this BaseXX project.
 
 Michael Traver has ported to Go the excellent work from Joachim Henke.
 
-See <https://github.com/mtraver/base91>.
+Repo: <https://github.com/mtraver/base91>
 
 ### Base91 by Majestrate
 
 Good Base91 implementation at
 <https://github.com/majestrate/base91>.
-I have not find any bug.
+
+No bugs found while benching it.
 
 ### Base91 by Equim
 
 Good Base91 implementation at
 <https://github.com/Equim-chan/base91-go>.
-I have not find any bug.
+
+No bugs found while benching it.
 
 ### Base91 by Brad Proctor
 
 The repo <https://github.com/bproctor/base91>
 is a slow Base91 implementation.
 Still faster than BaseXX/Base91.
-I have not find any bug.
+
+No bugs found while benching it.
 
 ### Base91 by Antonino Catinello
 
 The implementation by [Antonino Catinello](https://codeberg.org/ac)
-is not the fastest, and contains bugs. This repo contains a
+contains bugs. Moreover, this Base91 implementation
+does not accept customized encoding alphabet.
+
+This repo contains a
 [fork](<https://github.com/teal-finance/BaseXX/ac/base91>)
 (almost unmodified) of <https://codeberg.org/ac/base91>.
 The latter cannot be used because the module name
 `"catinello.eu/base91"` is not reachable (tested in May 2022).
-
-The implementation of [Antonino Catinello](https://codeberg.org/ac)
-is much faster than BaseXX/base91:
-The Base91 by Antonino encodes six times faster,
-and decodes twice faster.
-
-This Base91 implementation does not customize the encoding alphabet.
 
 ### Base91 by Chris Snell and Breeze Chen
 
