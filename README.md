@@ -218,14 +218,16 @@ Using the tips of <https://github.com/mtraver/base91>
 this BaseXX repo may become 200 times faster on the encoding,
 and 30 times faster on the decoding.
 
-## Contributions welcome
+## ✨ Contributions Welcome
 
-This BaseXX repo needs your help to become faster.
+This new project needs your help to become better.
 Please propose your enhancements,
 or even a further refactoring.
-Any contribution is welcome. ;-)
 
-## Feedback
+We welcome contributions in many forms,
+and there's always plenty to do!
+
+## 🗣️ Feedback
 
 If you have some suggestions, or need a new feature,
 please contact us, using the
@@ -237,11 +239,26 @@ Feel free to propose a
 [Pull Request](https://github.com/teal-finance/BaseXX/pulls),
 your contributions are welcome. :wink:
 
+## 🗽 Copyright and license
+
+Copyright (c) 2022 Teal.Finance contributors
+
+Teal.Finance/BaseXX is free software, and can redistributed
+and/or modified under the terms of the MIT License.
+SPDX-License-Identifier: MIT
+
+Teal.Finance/BaseXX is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty
+of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the [LICENSE](LICENSE) file (alongside the source files)
+or <https://opensource.org/licenses/MIT>.
+
 ## See also
 
 See similar other projects.
 
-### Collection of baseN by Radu Ovidiu Ilies
+### BaseN collection by Radu Ovidiu Ilies
 
 The repo <https://github.com/unix-world/smartgo> proposes many bases.
 
@@ -249,12 +266,11 @@ See the section [*Similar project*](#similar-project).
 
 ### Base91 by Joachim Henke and Michael Traver
 
-This is the cleanest and fastest Base91 Go-implementation
+The repo <https://github.com/mtraver/base91>
+is the cleanest and fastest Base91 Go-implementation
 of all the Base91 benched by this BaseXX project.
 
 Michael Traver has ported to Go the excellent work from Joachim Henke.
-
-Repo: <https://github.com/mtraver/base91>
 
 ### Base91 by Majestrate
 
