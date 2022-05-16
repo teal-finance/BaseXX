@@ -39,20 +39,29 @@ to provide the same API as the other packages.
 
 ## Common interface
 
-All these packages aim to provide the following API:
+All these packages aim to provide the following API
+similar of `"encoding/ascii85"`:
 
 ```go
-func NewEncoding(alphabet string) *Encoding
+func NewEncoding(encoder string) *Encoding
 
-interface Encoding {
-    Encode(bin []byte) []byte
-    Decode(ascii []byte) ([]byte, error)
+interface Encoding  {
+    Decode(dst, src []byte) (n int, err error)
+    Encode(dst, src []byte) (n int)
+    // Here Encode() returns the number of written bytes.
+    // This is different with encoding/base64.
+    // The encoded length cannot be known from just
+    // the number of bytes to encode, whereas it can with Base64.
 
-    EncodeToString(bin []byte) string
-    DecodeString(ascii string) ([]byte, error)
+    DecodeString(s string) ([]byte, error)
+    EncodeToString(src []byte) string
 
-    EncodedLen(n int) int
-    DecodedLen(n int) int
+    DecodedLen(n int) int // Returns the Max.
+    EncodedLen(n int) int // Returns the Max.
+
+    // Not implemented.
+    // Strict() *Encoding
+    // WithPadding(padding rune) *Encoding
 }
 ```
 

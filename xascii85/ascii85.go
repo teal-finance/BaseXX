@@ -3,8 +3,8 @@
 // SPDX-License-Identifier: MIT
 // See the LICENSE file or <https://opensource.org/licenses/MIT>.
 
-// package xascii85 provides convenient Encode()
-// and Decode() functions on top of "encoding/ascii85".
+// Package xascii85 implements the standard Encoding interface
+// on top of "encoding/ascii85".
 package xascii85
 
 import (
@@ -25,38 +25,40 @@ func NewEncoding(_ string) *Encoding {
 	return &Encoding{}
 }
 
-// EncodeToString encodes binary bytes into Ascii85 bytes.
-func (enc *Encoding) EncodeToString(bin []byte) string {
-	return string(enc.Encode(bin))
+// Encode encodes binary bytes into Ascii85 bytes.
+func (Encoding) Encode(dst, src []byte) (n int) {
+	return ascii85.Encode(dst, src)
 }
 
-// EncodeToString encodes binary bytes into a Ascii85 string
+// Decode decodes Ascii85-encoded bytes into a slice of bytes.
+func (Encoding) Decode(dst, src []byte) (n int, err error) {
+	n, _, err = ascii85.Decode(dst, src, true)
+	return n, err
+}
+
+// EncodeToString encodes binary bytes into an Ascii85 string
 // allocating the destination buffer at the right size.
-func (enc *Encoding) Encode(bin []byte) []byte {
-	max := ascii85.MaxEncodedLen(len(bin))
-	str := make([]byte, max)
-	n := ascii85.Encode(str, bin)
-	return str[:n]
+func (Encoding) EncodeToString(src []byte) string {
+	max := ascii85.MaxEncodedLen(len(src))
+	dst := make([]byte, max)
+	n := ascii85.Encode(dst, src)
+	return string(dst[:n])
 }
 
 // DecodeString decodes an Ascii85 string into a slice of bytes
 // allocating the destination buffer at the right size.
-func (enc *Encoding) DecodeString(str string) ([]byte, error) {
-	return enc.Decode([]byte(str))
-}
-
-// Decode decodes Ascii85-encoded bytes into a slice of bytes
-// allocating the destination buffer at the right size.
-func (enc *Encoding) Decode(a85 []byte) ([]byte, error) {
-	max := enc.DecodedLen(len(a85))
-	bin := make([]byte, max)
-	n, _, err := ascii85.Decode(bin, a85, true)
-	return bin[:n], err
+func (enc Encoding) DecodeString(s string) ([]byte, error) {
+	src := []byte(s)
+	max := enc.DecodedLen(len(src))
+	dst := make([]byte, max)
+	n, _, err := ascii85.Decode(dst, src, true)
+	return dst[:n], err
 }
 
 // EncodedLen returns the maximum length in bytes required to encode n bytes.
-func (enc *Encoding) EncodedLen(n int) int { return ascii85.MaxEncodedLen(n) }
+func (Encoding) EncodedLen(n int) int { return ascii85.MaxEncodedLen(n) }
 
-// DecodedLen returns the maximum length in bytes required to decode n Ascii85-encoded bytes.
-// Ascii85 encodes 4 bytes 0x0000 by only one byte "z".
-func (enc *Encoding) DecodedLen(n int) int { return 4 * n }
+// DecodedLen returns the maximum length in bytes
+// required to decode n Ascii85-encoded bytes.
+// Ascii85 decodes 4 bytes 0x0000 from only one byte "z".
+func (Encoding) DecodedLen(n int) int { return 4 * n }
