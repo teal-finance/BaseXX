@@ -243,7 +243,7 @@ your contributions are welcome. :wink:
 
 Copyright (c) 2022 Teal.Finance contributors
 
-Teal.Finance/BaseXX is free software, and can redistributed
+Teal.Finance/BaseXX is free software, and can be redistributed
 and/or modified under the terms of the MIT License.
 SPDX-License-Identifier: MIT
 
