@@ -24,7 +24,7 @@ type testValues struct {
 	enc string
 }
 
-var tstEncoding = NewEncoding(btcDigits[:Base])
+var tstEncoding = NewEncoding(btcDigits[:Radix])
 
 const n = 8192 // power of two to speed up the % modulo
 var testPairs = make([]testValues, 0, n)
@@ -58,7 +58,7 @@ func randEncoding() *Encoding {
 		bts[i] = bts[j]
 		bts[j] = byte(i)
 	}
-	return NewEncoding(string(bts[:Base]))
+	return NewEncoding(string(bts[:Radix]))
 }
 
 var btcDigits = "" +
@@ -72,7 +72,7 @@ func TestInvalidEncodingTooShort(t *testing.T) {
 		}
 	}()
 
-	_ = NewEncoding(btcDigits[:Base-1]) // too short
+	_ = NewEncoding(btcDigits[:Radix-1]) // too short
 }
 
 func TestInvalidEncodingTooLong(t *testing.T) {
@@ -92,7 +92,7 @@ func TestInvalidEncodingNon127(t *testing.T) {
 		}
 	}()
 
-	_ = NewEncoding("\xFF" + btcDigits[:Base-1]) // good length
+	_ = NewEncoding("\xFF" + btcDigits[:Radix-1]) // good length
 }
 
 func TestInvalidEncodingDup(t *testing.T) {
@@ -102,7 +102,7 @@ func TestInvalidEncodingDup(t *testing.T) {
 		}
 	}()
 
-	_ = NewEncoding(btcDigits[:1] + btcDigits[:Base-1]) // good length, but 1st char duplicated
+	_ = NewEncoding(btcDigits[:1] + btcDigits[:Radix-1]) // good length, but 1st char duplicated
 }
 
 func TestFastEqTrivialEncodingAndDecoding(t *testing.T) {

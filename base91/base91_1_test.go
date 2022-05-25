@@ -36,7 +36,7 @@ const benchChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz01234567
 
 var benchEncoding = NewEncoding(benchChars)
 
-var tstEncoding = NewEncoding(btcDigits[:Base])
+var tstEncoding = NewEncoding(btcDigits[:Radix])
 
 // func init() {
 // 	// If we do not seed the prng - it will default to a seed of (1)
@@ -80,7 +80,7 @@ func randEncoding() *Encoding {
 		bts[i] = bts[j]
 		bts[j] = byte(i)
 	}
-	return NewEncoding(string(bts[:Base]))
+	return NewEncoding(string(bts[:Radix]))
 }
 
 var btcDigits = "" +
@@ -94,7 +94,7 @@ func TestNewEncoding_InvalidTooShort(t *testing.T) {
 		}
 	}()
 
-	_ = NewEncoding(btcDigits[:Base-1]) // too short
+	_ = NewEncoding(btcDigits[:Radix-1]) // too short
 }
 
 func TestNewEncoding_InvalidTooLong(t *testing.T) {
@@ -114,7 +114,7 @@ func TestNewEncoding_InvalidNon127(t *testing.T) {
 		}
 	}()
 
-	_ = NewEncoding("\xFF" + btcDigits[:Base-1]) // good length
+	_ = NewEncoding("\xFF" + btcDigits[:Radix-1]) // good length
 }
 
 func TestNewEncoding_InvalidDup(t *testing.T) {
@@ -124,7 +124,7 @@ func TestNewEncoding_InvalidDup(t *testing.T) {
 		}
 	}()
 
-	_ = NewEncoding(btcDigits[:1] + btcDigits[:Base-1]) // good length, but 1st char duplicated
+	_ = NewEncoding(btcDigits[:1] + btcDigits[:Radix-1]) // good length, but 1st char duplicated
 }
 
 func TestEncoding_EncodeToString_DecodeString(t *testing.T) {

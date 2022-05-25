@@ -19,14 +19,14 @@ import (
 )
 
 const (
-	Base = 92
+	Radix = 92
 	// approximation of ceil(log(256)/log(base)).
 	numerator   = 16 // power of two -> speed up DecodeString()
 	denominator = 13
 )
 
 func init() {
-	encoding.PanicIfBadApproximation(Base, numerator, denominator)
+	encoding.PanicIfBadApproximation(Radix, numerator, denominator)
 }
 
 const alphabet = " !" + // double-quote " removed
@@ -40,7 +40,7 @@ var StdEncoding = NewEncoding(alphabet)
 type Encoding encoding.Encoding
 
 func NewEncoding(encoder string) *Encoding {
-	e := encoding.NewEncoding(encoder, Base)
+	e := encoding.NewEncoding(encoder, Radix)
 	return (*Encoding)(e)
 }
 
@@ -75,8 +75,8 @@ func (enc *Encoding) Encode(bin []byte) []byte {
 		i = size - 1
 		for carry = uint32(b); i > high || carry != 0; i-- {
 			carry += 256 * uint32(out[i])
-			out[i] = byte(carry % uint32(Base))
-			carry /= uint32(Base)
+			out[i] = byte(carry % uint32(Radix))
+			carry /= uint32(Radix)
 		}
 		high = i
 	}
@@ -117,16 +117,16 @@ func (enc *Encoding) DecodeString(str string) ([]byte, error) {
 
 	for _, r := range str {
 		if r > 127 {
-			return nil, fmt.Errorf("Base%d: high-bit set on invalid digit", Base)
+			return nil, fmt.Errorf("Base%d: high-bit set on invalid digit", Radix)
 		}
 		if enc.DecMap[r] == -1 {
-			return nil, fmt.Errorf("Base%d: invalid digit %q", Base, r)
+			return nil, fmt.Errorf("Base%d: invalid digit %q", Radix, r)
 		}
 
 		c = uint64(enc.DecMap[r])
 
 		for j := len(outi) - 1; j >= 0; j-- {
-			t = uint64(outi[j])*uint64(Base) + c
+			t = uint64(outi[j])*uint64(Radix) + c
 			c = t >> 32
 			outi[j] = uint32(t & 0xffffffff)
 		}
