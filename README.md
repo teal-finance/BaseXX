@@ -1,6 +1,6 @@
 # BaseXX
 
-Go modules: &emsp; &emsp; &emsp; &emsp; &emsp; [![Go Reference](https://pkg.go.dev/badge/github.com/teal-finance/BaseXX.svg "Go documentation for BaseXX")](https://pkg.go.dev/github.com/teal-finance/BaseXX)
+Go modules: &emsp; &emsp; &emsp; &emsp; &emsp; [![Go Reference](https://pkg.go.dev/badge/github.com/teal-finance/BaseXX.svg "Go documentation for BaseXX")](https://pkg.go.dev/github.com/teal-finance/BaseXX) [![Go Report Card](https://goreportcard.com/badge/github.com/teal-finance/BaseXX)](https://goreportcard.com/report/github.com/teal-finance/BaseXX)
 
 [`import "github.com/teal-finance/BaseXX/base58"`](./base58/)  
 [`import "github.com/teal-finance/BaseXX/base62"`](./base62/)  
@@ -232,7 +232,7 @@ and there's always plenty to do!
 If you have some suggestions, or need a new feature,
 please contact us, using the
 [issue tracking](https://github.com/teal-finance/BaseXX/issues),
-or at Teal.Finance[à]pm.me or
+or at Teal.Finance@pm.me or
 [@TealFinance](https://twitter.com/TealFinance).
 
 Feel free to propose a
