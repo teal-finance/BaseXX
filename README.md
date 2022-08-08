@@ -6,7 +6,7 @@ Go modules: &emsp; &emsp; &emsp; &emsp; &emsp; [![Go Reference](https://pkg.go.d
 [`import "github.com/teal-finance/BaseXX/base62"`](./base62/)  
 [`import "github.com/teal-finance/BaseXX/base91"`](./base91/)  
 [`import "github.com/teal-finance/BaseXX/base92"`](./base92/)  
-[`import "github.com/teal-finance/BaseXX/xascii85"`](./xascii85/)  
+[`import "github.com/teal-finance/BaseXX/xascii85"`](./xascii85/)
 
 Characters often used by common BaseXX encodings:
 
@@ -114,7 +114,9 @@ double-quote (`"`), semicolon (`;`) and backslash (`\`).
 The [RFC 6750](https://www.rfc-editor.org/rfc/rfc6750.html#section-2.1)
 is conservative and recommends to use the following 70 characters:
 
-    0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+-./_~
+```
+0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+-./_~
+```
 
 ## Usage
 
@@ -157,7 +159,7 @@ The benchmark shows this BaseXX project is almost faster than the
 goos: linux
 goarch: amd64
 pkg: github.com/teal-finance/BaseXX/ac/base91
-cpu: AMD Ryzen 9 3900X 12-Core Processor            
+cpu: AMD Ryzen 9 3900X 12-Core Processor
 BenchmarkEncode-24           236           5220578 ns/op
 BenchmarkDecode-24           222           5695511 ns/op
 PASS
@@ -165,7 +167,7 @@ ok      github.com/teal-finance/BaseXX/ac/base91        3.600s
 goos: linux
 goarch: amd64
 pkg: github.com/teal-finance/BaseXX/base58
-cpu: AMD Ryzen 9 3900X 12-Core Processor            
+cpu: AMD Ryzen 9 3900X 12-Core Processor
 BenchmarkEncode-24                       1000000              1621 ns/op
 BenchmarkEncodeMrTronBase58-24            663850              1734 ns/op
 BenchmarkDecode-24                       1625545               745.3 ns/op
@@ -175,7 +177,7 @@ ok      github.com/teal-finance/BaseXX/base58   6.733s
 goos: linux
 goarch: amd64
 pkg: github.com/teal-finance/BaseXX/base62
-cpu: AMD Ryzen 9 3900X 12-Core Processor            
+cpu: AMD Ryzen 9 3900X 12-Core Processor
 BenchmarkEncode-24       1000000              1255 ns/op
 BenchmarkDecode-24       1610145               784.7 ns/op
 PASS
@@ -183,7 +185,7 @@ ok      github.com/teal-finance/BaseXX/base62   3.302s
 goos: linux
 goarch: amd64
 pkg: github.com/teal-finance/BaseXX/base91
-cpu: AMD Ryzen 9 3900X 12-Core Processor            
+cpu: AMD Ryzen 9 3900X 12-Core Processor
 BenchmarkEncoding_Encode-24                         2821            402254 ns/op
 BenchmarkEncoding_EncodeToString-24                 2972            411904 ns/op
 BenchmarkEncoding_DecodeString-24                  15943             84473 ns/op
@@ -199,7 +201,7 @@ ok      github.com/teal-finance/BaseXX/base91   14.924s
 goos: linux
 goarch: amd64
 pkg: github.com/teal-finance/BaseXX/base92
-cpu: AMD Ryzen 9 3900X 12-Core Processor            
+cpu: AMD Ryzen 9 3900X 12-Core Processor
 BenchmarkEncode-24                        819314              1415 ns/op
 BenchmarkEncodeSmartgoBase92-24           153697              8140 ns/op
 BenchmarkDecode-24                       1799289               665.9 ns/op
@@ -262,7 +264,7 @@ See similar other projects.
 
 The repo <https://github.com/unix-world/smartgo> proposes many bases.
 
-See the section [*Similar project*](#similar-project).
+See the section [_Similar project_](#similar-project).
 
 ### Base91 by Joachim Henke and Michael Traver
 
@@ -301,7 +303,7 @@ contains bugs. Moreover, this Base91 implementation
 does not accept customized encoding alphabet.
 
 This repo contains a
-[fork](<https://github.com/teal-finance/BaseXX/ac/base91>)
+[fork](https://github.com/teal-finance/BaseXX/ac/base91)
 (almost unmodified) of <https://codeberg.org/ac/base91>.
 The latter cannot be used because the module name
 `"catinello.eu/base91"` is not reachable (tested in May 2022).
