@@ -8,8 +8,7 @@
 // SPDX-License-Identifier: MIT
 // See the LICENSE file or https://opensource.org/licenses/MIT
 
-// Package encoding provides common functions for the packages
-// at "github.com/teal-finance/garcon/basexx".
+// Package encoding provides common functions for all BaseXX implementations.
 package encoding
 
 import (
