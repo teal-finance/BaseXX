@@ -10,7 +10,7 @@ require (
 	github.com/majestrate/base91 v0.0.0-20160406115715-9911d3d6c2aa
 	github.com/mtraver/base91 v1.0.0
 	github.com/unix-world/smartgo v0.0.0-20220529111151-f01970b8d565
-	golang.org/x/perf v0.0.0-20220411212318-84e58bfe0a7e
+	golang.org/x/perf v0.0.0-20220722155240-3d85ee92886d
 )
 
 require (
@@ -19,7 +19,7 @@ require (
 	github.com/unix-world/smartgo/colorstring v0.0.0-20220529111151-f01970b8d565 // indirect
 	github.com/unix-world/smartgo/logutils v0.0.0-20220529111151-f01970b8d565 // indirect
 	github.com/unix-world/smartgo/threefish v0.0.0-20220529111151-f01970b8d565 // indirect
-	golang.org/x/crypto v0.0.0-20220525230936-793ad666bf5e // indirect
-	golang.org/x/sys v0.0.0-20220520151302-bc2c85ada10a // indirect
+	golang.org/x/crypto v0.0.0-20220722155217-630584e8d5aa // indirect
+	golang.org/x/sys v0.0.0-20220804214406-8e32c043e418 // indirect
 	golang.org/x/text v0.3.7 // indirect
 )
