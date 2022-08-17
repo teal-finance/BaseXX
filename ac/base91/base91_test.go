@@ -30,7 +30,7 @@ func TestEncode(t *testing.T) {
 	for bin, s := range samples {
 		b := []byte(bin)
 		if got := EncodeToString(b); got != s {
-			t.Error("Incorrect encoding of ", b)
+			t.Error("Incorrect encoding of", b)
 			t.Errorf("want: %q", s)
 			t.Errorf("got : %q", got)
 		}
