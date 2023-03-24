@@ -4,30 +4,29 @@
 
 // Usage
 //
-//    go run github.com/teal-finance/BaseXX/examples/bench@latest -h
+//	go run github.com/teal-finance/BaseXX/examples/bench@latest -h
 //
 // Bench all encoders
 //
-//    go run github.com/teal-finance/BaseXX/examples/bench@latest -f path/file/to/encode
+//	go run github.com/teal-finance/BaseXX/examples/bench@latest -f path/file/to/encode
 //
 // Short sample
 //
-//    go run github.com/teal-finance/BaseXX/examples/bench@latest -f <(echo 123456789-abcdefghijk)
+//	go run github.com/teal-finance/BaseXX/examples/bench@latest -f <(echo 123456789-abcdefghijk)
 //
 // Bench in parallel
 //
-//    go run github.com/teal-finance/BaseXX/examples/bench@latest -j -f <(echo 123456789-abcdefghijk)
+//	go run github.com/teal-finance/BaseXX/examples/bench@latest -j -f <(echo 123456789-abcdefghijk)
 //
-// Detect race conditions
+// # Detect race conditions
 //
 // Using -race flag slow down the test.
 //
-//    go run -race github.com/teal-finance/BaseXX/examples/bench@latest -j -f <(echo 123456789-abcdefghijk)
+//	go run -race github.com/teal-finance/BaseXX/examples/bench@latest -j -f <(echo 123456789-abcdefghijk)
 //
 // Increase number of loops
 //
-//    go run -race github.com/teal-finance/BaseXX/examples/bench@latest -n 999000 -j -f <(echo 123456789-abcdefghijk)
-//
+//	go run -race github.com/teal-finance/BaseXX/examples/bench@latest -n 999000 -j -f <(echo 123456789-abcdefghijk)
 package main
 
 import (
@@ -38,12 +37,12 @@ import (
 	"time"
 
 	t91 "github.com/mtraver/base91"
+	"github.com/unix-world/smartgo"
+	s92 "github.com/unix-world/smartgo/base92"
+	"golang.org/x/perf/benchmath"
+
 	b91 "github.com/teal-finance/BaseXX/base91"
 	b92 "github.com/teal-finance/BaseXX/base92"
-	s92 "github.com/unix-world/smartgo/base92"
-
-	"github.com/unix-world/smartgo"
-	"golang.org/x/perf/benchmath"
 )
 
 const (
