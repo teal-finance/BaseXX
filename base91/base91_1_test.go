@@ -20,9 +20,6 @@ import (
 	bproctorBase91 "github.com/bproctor/base91"
 	majestrateBase91 "github.com/majestrate/base91"
 	mtraverBase91 "github.com/mtraver/base91"
-	// having bugs:
-	// acBase91 "github.com/teal-finance/BaseXX/ac/base91"
-	// breezechenBase91 "github.com/breezechen/base91"
 )
 
 const (
